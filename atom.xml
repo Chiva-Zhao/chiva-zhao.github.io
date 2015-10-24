@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[Love Life, Love coding]]></title>
+  <subtitle><![CDATA[码农，程序猿，未来的昏析师]]></subtitle>
+  <link href="/atom.xml" rel="self"/>
+  <link href="http://chiva-zhao.github.io/"/>
+  <updated>2015-10-23T09:00:50.000Z</updated>
+  <id>http://chiva-zhao.github.io/</id>
+  
+  <author>
+    <name><![CDATA[Chiva Zhao]]></name>
+    <email><![CDATA[59205240@163.com]]></email>
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[企业公众号回调URL及密钥的配置]]></title>
+    <link href="http://chiva-zhao.github.io/2015/10/23/weixin-verify/"/>
+    <id>http://chiva-zhao.github.io/2015/10/23/weixin-verify/</id>
+    <published>2015-10-23T08:25:39.000Z</published>
+    <updated>2015-10-23T09:00:50.000Z</updated>
+    <content type="html"><![CDATA[<p>简要介绍企业公众号回调URL及密钥配置</p>
+<a id="more"></a>
+<h2 id="企业公众号和企业应用之间的连接">企业公众号和企业应用之间的连接</h2><p>有以下三种方式：</p>
+<ol>
+<li>企业应用调用企业号提供的接口，管理或查询企业号后台所管理的资源、或给成员发送消息等，称为<code>主动调用模式</code>。</li>
+<li>企业号把用户发送的消息或用户触发的事件推送给企业应用，由企业应用处理，称为<code>回调模式</code></li>
+<li>用户在微信中阅读企业应用下发的H5页面，该页面可以调用微信提供的原生接口，使用微信开放的终端能力，称为<code>JSAPI模式</code></li>
+</ol>
+<h2 id="开启应用的回调模式">开启应用的回调模式</h2><p>当你开启应用的回调模式时，企业号会要求你填写应用的<code>URL</code>、<code>Token</code>、<code>EncodingAESKey</code>三个参数。<br><code>URL</code>是企业应用接收企业号推送请求的访问协议和地址，支持http或https协议。<br><code>Token</code>可由企业任意填写，用于生成签名。<br><code>EncodingAESKey</code>用于消息体的加密，是AES密钥的Base64编码。</p>
+<h2 id="验证URL有效性">验证URL有效性</h2><blockquote>
+<p>当你提交以上信息时，企业号将发送GET请求到填写的URL上，GET请求携带四个参数，企业在获取时需要做urldecode处理，否则会验证不成功</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>是否必带</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>msg_signature</strong></td>
+<td>微信加密签名，msg_signature结合了企业填写的token、请求中的timestamp、nonce参数、加密的消息体</td>
+<td>是</td>
+</tr>
+<tr>
+<td><strong>timestamp</strong></td>
+<td>时间戳</td>
+<td>是</td>
+</tr>
+<tr>
+<td><strong>nonce</strong></td>
+<td>随机数</td>
+<td>是</td>
+</tr>
+<tr>
+<td><strong>echostr</strong></td>
+<td>加密的随机字符串，以msg_encrypt格式提供。需要解密并返回echostr明文，解密后有random、msg_len、msg、$CorpID四个字段，其中msg即为echostr明文</td>
+<td>首次校验时必带</td>
+</tr>
+</tbody>
+</table>
+<h2 id="用Spring_MVC实现的示例代码">用Spring MVC实现的示例代码</h2><pre><code class="java"><span class="comment">//...</span>
+<span class="annotation">@Autowired</span>
+<span class="keyword">private</span> WeixinProperties properties;
+<span class="comment">//...</span>
+<span class="annotation">@RequestMapping</span>(value = <span class="string">"/app1"</span>, method = RequestMethod.GET)
+<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">verifyURL</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> Exception </span>{
+    <span class="keyword">try</span> {
+        WXBizMsgCrypt wxcpt = <span class="keyword">new</span> WXBizMsgCrypt(properties.getToken(), properties.getEncodingAESKey(), properties.getCorpID());
+        String msg_signature = request.getParameter(<span class="string">"msg_signature"</span>);
+        String timestamp = request.getParameter(<span class="string">"timestamp"</span>);
+        String nonce = request.getParameter(<span class="string">"nonce"</span>);
+        String echostr = request.getParameter(<span class="string">"echostr"</span>);
+        String sEchoStr = wxcpt.VerifyURL(msg_signature, timestamp, nonce, echostr);
+        System.out.println(<span class="string">"verifyurl echostr: "</span> + sEchoStr);
+        response.getWriter().print(sEchoStr);
+    } <span class="keyword">catch</span> (Exception e) {
+        e.printStackTrace();
+    }
+}
+</code></pre>
+<h2 id="参考文档">参考文档</h2><ul>
+<li><a href="http://qydev.weixin.qq.com/wiki/index.php?title=%E5%9B%9E%E8%B0%83%E6%A8%A1%E5%BC%8F" target="_blank" rel="external">回调模式</a></li>
+<li><a href="http://qydev.weixin.qq.com/wiki/index.php?title=%E5%8A%A0%E8%A7%A3%E5%AF%86%E6%96%B9%E6%A1%88%E7%9A%84%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E" target="_blank" rel="external">加解密方案的详细说明</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>简要介绍企业公众号回调URL及密钥配置</p>]]>
+    
+    </summary>
+    
+      <category term="微信" scheme="http://chiva-zhao.github.io/tags/%E5%BE%AE%E4%BF%A1/"/>
+    
+      <category term="验证" scheme="http://chiva-zhao.github.io/tags/%E9%AA%8C%E8%AF%81/"/>
+    
+      <category term="微信" scheme="http://chiva-zhao.github.io/categories/%E5%BE%AE%E4%BF%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[响应式web设计笔记(1)]]></title>
+    <link href="http://chiva-zhao.github.io/2015/10/22/responsive-web-design/"/>
+    <id>http://chiva-zhao.github.io/2015/10/22/responsive-web-design/</id>
+    <published>2015-10-22T03:07:00.000Z</published>
+    <updated>2015-10-22T03:35:09.000Z</updated>
+    <content type="html"><![CDATA[<p>简单介绍响应式设计的基本概念<br><a id="more"></a></p>
+<h2 id="什么是响应式设计">什么是响应式设计</h2><p>用一句话描述就是:你设计的网站在各个尺寸的终端上（<code>PC，mobile，tablet</code>等）被用户访问的时候，页面的布局，包括长宽以及图片的排版，可以自适应设备的系统，屏幕尺寸以及屏幕方向。</p>
+<h2 id="响应式设计的历史">响应式设计的历史</h2><blockquote>
+<p>2010年5月，<code>伊桑.马科特（Ethan Marcotte）</code>在“A List Apart”写了一篇开创性的文章（题为<code>Responsive Web Design</code> ），他利用三种已有的工具：<code>流动布局（fluid grids）</code>、<code>媒介查询（media queries）</code>和<code>弹性图片（scalable images）</code>创建了一个在不同分辨率屏幕下都能漂亮地显示的网站。 Ethan Marcotte力劝设计师们要去利用那些Web独有的特性去进行设计： “我们可以将不同联网设备上众多的体验，当作是同一网站体验的不同侧面来对待，而不要为每种设备进行单独剪裁而使得设计彼此断开，这才是我们前进的方向。虽然我们已经能够设计出最佳的视觉体验，但还要把基于标准的技术也嵌入到我们的设计中去，这样才能使得我们的设计不仅灵活，而且还能适应渲染它们的各种媒介。” Ethan Marcotte证明了一种在多种设备上都能提供卓越体验的方法的存在，而且这一方法不会忽视不同设备的差异，也不会强调设计师的控制权，而是选择了顺其自然并拥抱Web的灵活性。</p>
+</blockquote>
+<h2 id="设计原则">设计原则</h2><ol>
+<li>移动优先：在设计初期就要考虑页面如何在多终端显示<br>考虑IE8等不支持css3的兼容性，使用javascript来实现统一的显示效果。</li>
+<li>渐进增强：充分发挥硬件设备的最大功能</li>
+</ol>
+<h2 id="实现响应式布局的一些方法">实现响应式布局的一些方法</h2><ul>
+<li>ccs3-Media Query     最简单的方式</li>
+<li>借助原生的javascript    成本高，不推荐使用</li>
+<li>第三方开源框架         可以很好的支持浏览器响应式布局的设计，例如有名的bootstrap</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>简单介绍响应式设计的基本概念<br>]]>
+    
+    </summary>
+    
+      <category term="web" scheme="http://chiva-zhao.github.io/categories/web/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[我的阅历]]></title>
+    <link href="http://chiva-zhao.github.io/2015/10/21/fancybox/"/>
+    <id>http://chiva-zhao.github.io/2015/10/21/fancybox/</id>
+    <published>2015-10-21T07:32:35.000Z</published>
+    <updated>2015-10-21T08:04:17.000Z</updated>
+    <content type="html"><![CDATA[<p>读书何所求?将以通事理<br><a id="more"></a></p>
+<h2 id="正在阅读">正在阅读</h2><p><img src="http://img3.douban.com/mpic/s28012782.jpg" alt="AngularJS in Action"><br><img src="http://img3.douban.com/mpic/s27315132.jpg" alt="Learning Responsive Web Design"></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>读书何所求?将以通事理<br>]]>
+    
+    </summary>
+    
+      <category term="hexo" scheme="http://chiva-zhao.github.io/tags/hexo/"/>
+    
+      <category term="books" scheme="http://chiva-zhao.github.io/categories/books/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[用hexo建博客碰到的问题总结]]></title>
+    <link href="http://chiva-zhao.github.io/2015/10/20/hexo-blog/"/>
+    <id>http://chiva-zhao.github.io/2015/10/20/hexo-blog/</id>
+    <published>2015-10-20T06:12:20.000Z</published>
+    <updated>2015-10-22T03:11:03.000Z</updated>
+    <content type="html"><![CDATA[<p>此文总结了本人用hexo建博客时碰到的一些问题</p>
+<a id="more"></a>
+<h2 id="hexo常用命令">hexo常用命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo n <span class="comment">#写文章</span></span><br><span class="line">hexo g <span class="comment">#生成静态页面</span></span><br><span class="line">hexo d <span class="comment">#部署到github</span></span><br><span class="line">hexo s <span class="comment">#本地启动</span></span><br></pre></td></tr></table></figure>
+<h2 id="问题汇总">问题汇总</h2><h3 id="问题一：执行hexo_d总报错">问题一：执行hexo d总报错</h3><p>本机执行环境：hexo -v<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">hexo: <span class="number">3.1</span>.<span class="number">1</span></span><br><span class="line">os: Windows_NT <span class="number">10.0</span>.<span class="number">10240</span> win32 x64</span><br><span class="line">http_parser: <span class="number">2.5</span>.<span class="number">0</span></span><br><span class="line">node: <span class="number">4.1</span>.<span class="number">0</span></span><br><span class="line">v8: <span class="number">4.5</span>.<span class="number">103.33</span></span><br><span class="line">uv: <span class="number">1.7</span>.<span class="number">4</span></span><br><span class="line">zlib: <span class="number">1.2</span>.<span class="number">8</span></span><br><span class="line">ares: <span class="number">1.10</span>.<span class="number">1</span>-DEV</span><br><span class="line">modules: <span class="number">46</span></span><br><span class="line">openssl: <span class="number">1.0</span>.<span class="number">2</span>d</span><br></pre></td></tr></table></figure></p>
+<p>部署配置为<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  <span class="comment">#repo: https://github.com/Chiva-Zhao/jobar.github.io.git</span></span><br><span class="line">  repo: git@github.com:Chiva-Zhao/chiva-zhao.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></p>
+<p>执行hexo d报错：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">nothing to commit, working directory clean</span><br><span class="line">bash: /dev/tty: No such device or address</span><br><span class="line">error: <span class="function">failed to execute prompt <span class="title">script</span> <span class="params">(exit code <span class="number">1</span>)</span></span><br><span class="line">fatal: could not read Username <span class="keyword">for</span> 'https:<span class="comment">//github.com': No error</span></span><br><span class="line">FATAL Something's wrong. Maybe you can find the solution here: http:<span class="comment">//hexo.io/docs/troubleshooting.html</span></span><br><span class="line">Error: bash: /dev/tty: No such device or address</span><br><span class="line">error: failed to execute prompt <span class="title">script</span> <span class="params">(exit code <span class="number">1</span>)</span></span><br><span class="line">fatal: could not read Username <span class="keyword">for</span> 'https:<span class="comment">//github.com': No error</span></span><br><span class="line"></span><br><span class="line">    at ChildProcess.&lt;anonymous&gt; <span class="params">(D:\workspace\blog\node_modules\hexo-deployer-git\node_modules\hexo-util\lib\spawn.js:<span class="number">42</span>:<span class="number">17</span>)</span></span><br><span class="line">    at <span class="title">emitTwo</span> <span class="params">(events.js:<span class="number">87</span>:<span class="number">13</span>)</span></span><br><span class="line">    at ChildProcess.<span class="title">emit</span> <span class="params">(events.js:<span class="number">172</span>:<span class="number">7</span>)</span></span><br><span class="line">    at <span class="title">maybeClose</span> <span class="params">(internal/child_process.js:<span class="number">817</span>:<span class="number">16</span>)</span></span><br><span class="line">    at Process.ChildProcess._handle.<span class="title">onexit</span> <span class="params">(internal/child_process.js:<span class="number">211</span>:<span class="number">5</span>)</span></span></span><br></pre></td></tr></table></figure></p>
+<p><strong><code>分析</code></strong>:本机装了<code>git</code>和<code>TortoiseGit</code>，执行deploy时候跟环境变量指定的<code>TortoiseGit</code>有冲突,干掉相关的环境变量：”SVN_SSH” or “SSH”等含有<code>TortoiseGit.exe</code>的环境变量</p>
+<h3 id="问题而：部署上去之后访问不了，github报404错误">问题而：部署上去之后访问不了，github报404错误</h3><p><strong><code>分析</code></strong>:github要求你必须要用<strong><code>username.github.io</code></strong>来命名你的scheme。刚开始建的xxx.github.io是不能用的，必须要用你github的<code>username</code>来建，了解了原因之后就好说了，重新改名为我的username.github.io.搞定！<br>具体参考<a href="https://help.github.com/articles/user-organization-and-project-pages/" target="_blank" rel="external">这里</a></p>
+<h3 id="问题三：配置关于菜单">问题三：配置关于菜单</h3><ol>
+<li>在博客主目录的source下建about目录</li>
+<li>新建一个index.md文件输入内容<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="header"># 关于我</span></span><br><span class="line"></span><br><span class="line">爱生活，爱编程</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="问题四：RSS订阅不起作用">问题四：RSS订阅不起作用</h3><ol>
+<li><p>安装hexo-generator-feed插件</p>
+ <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="operator"><span class="keyword">install</span> hexo-generator-feed <span class="comment">--save</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行<code>hexo g &amp; hexo s</code>,发现public文件夹下已生成<code>atom.xml</code>，搞定！</p>
+</li>
+</ol>
+<h3 id="问题五：中英文以及中文乱码问题">问题五：中英文以及中文乱码问题</h3><p>需要把你编辑的博客文件保存为UTF-8的格式<br>另外在_config.yml文件中配置language选项<br><code>language: zh-CN</code></p>
+<h3 id="问题六：如何配置分类和标签？">问题六：如何配置分类和标签？</h3><ol>
+<li>在博客主目录的source下新建<code>categories</code>和<code>tags</code>目录，里面分别放一个index.md文件</li>
+<li>内容分别为<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">layout: categories</span><br><span class="line">title: categories</span><br><span class="line"></span><br><span class="line">layout: tags</span><br><span class="line">title: tags</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>在写博客的时候前面文章前面加入：<br><code>tags: [hexo,RSS, github]</code> 多个标签用<code>[]</code>括起来，<code>,</code>做为分隔符<br><code>categories:issues</code><br>hexo会为我们自动进行文章的分类和标签</p>
+<h2 id="参考资料">参考资料</h2><ol>
+<li><a href="https://help.github.com/categories/github-pages-basics/" target="_blank" rel="external">GitHub Pages Basics</a></li>
+<li><a href="http://www.wuchong.me/blog/2014/11/20/how-to-use-jacman/" target="_blank" rel="external">jackman 主题使用</a></li>
+<li><a href="http://ibruce.info/2013/11/22/hexo-your-blog/" target="_blank" rel="external">hexo你的博客</a></li>
+<li>最后感谢<a href="http://tiny1024.com/" target="_blank" rel="external">tiny2014</a>的帮助</li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>此文总结了本人用hexo建博客时碰到的一些问题</p>]]>
+    
+    </summary>
+    
+      <category term="hexo" scheme="http://chiva-zhao.github.io/tags/hexo/"/>
+    
+      <category term="issues" scheme="http://chiva-zhao.github.io/categories/issues/"/>
+    
+  </entry>
+  
+</feed>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    
+  <url>
+    <loc>http://chiva-zhao.github.io/2015/10/23/weixin-verify/</loc>
+    <lastmod>2015-10-23T09:00:50.000Z</lastmod>
+    <data>
+        <display>
+        <title>企业公众号回调URL及密钥的配置</title>
+        <pubTime>2015-10-23T08:25:39.000Z</pubTime>
+        
+        <tag>微信 </tag>
+         
+        <tag>验证 </tag>
+         
+         
+           
+             
+              <breadCrumb title="微信" url="http://chiva-zhao.github.io/categories/%E5%BE%AE%E4%BF%A1/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chiva-zhao.github.io/2015/10/22/responsive-web-design/</loc>
+    <lastmod>2015-10-22T03:35:09.000Z</lastmod>
+    <data>
+        <display>
+        <title>响应式web设计笔记(1)</title>
+        <pubTime>2015-10-22T03:07:00.000Z</pubTime>
+        
+         
+           
+             
+              <breadCrumb title="web" url="http://chiva-zhao.github.io/categories/web/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chiva-zhao.github.io/2015/10/20/hexo-blog/</loc>
+    <lastmod>2015-10-22T03:11:03.000Z</lastmod>
+    <data>
+        <display>
+        <title>用hexo建博客碰到的问题总结</title>
+        <pubTime>2015-10-20T06:12:20.000Z</pubTime>
+        
+        <tag>hexo </tag>
+         
+         
+           
+             
+              <breadCrumb title="issues" url="http://chiva-zhao.github.io/categories/issues/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+  <url>
+    <loc>http://chiva-zhao.github.io/2015/10/21/fancybox/</loc>
+    <lastmod>2015-10-21T08:04:17.000Z</lastmod>
+    <data>
+        <display>
+        <title>我的阅历</title>
+        <pubTime>2015-10-21T07:32:35.000Z</pubTime>
+        
+        <tag>hexo </tag>
+         
+         
+           
+             
+              <breadCrumb title="books" url="http://chiva-zhao.github.io/categories/books/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+    
+</urlset>
