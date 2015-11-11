@@ -4,7 +4,7 @@
   <subtitle><![CDATA[码农，程序猿，未来的昏析师]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://chiva-zhao.github.io/"/>
-  <updated>2015-10-23T09:00:50.000Z</updated>
+  <updated>2015-11-11T14:18:35.169Z</updated>
   <id>http://chiva-zhao.github.io/</id>
   
   <author>
@@ -13,6 +13,231 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[通过微信公众号上次媒体文件]]></title>
+    <link href="http://chiva-zhao.github.io/2015/11/11/weixin-upload/"/>
+    <id>http://chiva-zhao.github.io/2015/11/11/weixin-upload/</id>
+    <published>2015-11-11T14:05:54.000Z</published>
+    <updated>2015-11-11T14:18:35.169Z</updated>
+    <content type="html"><![CDATA[<p>在企业公众号中上传媒体文件<br><a id="more"></a></p>
+<h2 id="说明">说明</h2><p>用于上传图片、语音、视频等媒体资源文件以及普通文件（如doc，ppt），接口返回媒体资源标识ID：<code>media_id</code>。请注意，<code>media_id</code>是可复用的，同一个<code>media_id</code>可用于消息的多次发送(3天内有效)。正常情况下</p>
+<h2 id="限制">限制</h2><p>上传的媒体文件限制</p>
+<ul>
+<li>所有文件size必须大于5个字节</li>
+<li>图片（image）:2MB，支持JPG,PNG格式</li>
+<li>语音（voice）：2MB，播放长度不超过60s，支持AMR格式</li>
+<li>视频（video）：10MB，支持MP4格式</li>
+<li>普通文件（file）：20MB</li>
+</ul>
+<h2 id="主要代码实现">主要代码实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * [execPostFile 上传文件]</span><br><span class="line"> * <span class="doctag">@param</span>  &#123;[type]&#125; String url           [微信上次媒体文件url]</span><br><span class="line"> * <span class="doctag">@param</span>  &#123;[type]&#125; File   tempFile      [本地文件]</span><br><span class="line"> * <span class="doctag">@return</span> &#123;[type]&#125;        [JSON对象]</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> JSONObject <span class="title">execPostFile</span><span class="params">(String url, File tempFile)</span> </span>&#123;</span><br><span class="line">    CloseableHttpClient httpclient = HttpClients.createDefault();</span><br><span class="line">    HttpPost httppost = <span class="keyword">new</span> HttpPost(url);</span><br><span class="line">    JSONObject jsonResult = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        MultipartEntityBuilder builder = MultipartEntityBuilder.create();</span><br><span class="line">        builder.addBinaryBody(<span class="string">"media"</span>, tempFile);</span><br><span class="line">        httppost.setEntity(builder.build());</span><br><span class="line">        HttpResponse result = httpclient.execute(httppost);</span><br><span class="line">        <span class="comment">/** 请求发送成功，并得到响应 **/</span></span><br><span class="line">        <span class="keyword">if</span> (result.getStatusLine().getStatusCode() == <span class="number">200</span>) &#123;</span><br><span class="line">            String str = <span class="string">""</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">/** 读取服务器返回过来的json字符串数据 **/</span></span><br><span class="line">                str = EntityUtils.toString(result.getEntity());</span><br><span class="line">                <span class="comment">/** 把json字符串转换成json对象 **/</span></span><br><span class="line">                jsonResult = JSONObject.fromObject(str);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                logger.error(<span class="string">"post请求提交失败:"</span> + url, e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> jsonResult;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="参考文档">参考文档</h2><ul>
+<li><a href="http://qydev.weixin.qq.com/wiki/index.php?title=%E4%B8%8A%E4%BC%A0%E4%B8%B4%E6%97%B6%E7%B4%A0%E6%9D%90%E6%96%87%E4%BB%B6" target="_blank" rel="external">上传临时素材文件</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>在企业公众号中上传媒体文件<br>]]>
+    
+    </summary>
+    
+      <category term="upload" scheme="http://chiva-zhao.github.io/tags/upload/"/>
+    
+      <category term="weixin" scheme="http://chiva-zhao.github.io/tags/weixin/"/>
+    
+      <category term="微信" scheme="http://chiva-zhao.github.io/categories/%E5%BE%AE%E4%BF%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[响应式web设计笔记(3) 页面如何加载渲染]]></title>
+    <link href="http://chiva-zhao.github.io/2015/10/29/html5-how-pages-loaded/"/>
+    <id>http://chiva-zhao.github.io/2015/10/29/html5-how-pages-loaded/</id>
+    <published>2015-10-29T06:26:59.000Z</published>
+    <updated>2015-10-29T07:33:06.000Z</updated>
+    <content type="html"><![CDATA[<p>简要说明html5中页面是如何加载渲染的<br><a id="more"></a></p>
+<h2 id="网络延时">网络延时</h2><p>当你在浏览器栏敲入url回车或者点击一个链接的时候，你的终端（笔记本，台式机或者手机）会连接到因特网上，不管你的网络商是移动，联通电信还是宽带通……台式机还好一些，因为你一打开电脑就能上网，但如果你手机上网，那就需要连接一个离你最近的蜂窝站，告诉它你需要上网，理想情况下，如果这个蜂窝站连的人不多，你上网还比较顺畅，但在大城市中，同时打开手机上网的人总是非常多（看看地铁上的低头族就知道了），那么这个蜂窝站总是很忙，那就只能悲催的排队等候了，这样上网就会很慢，延时很大。<strong>4G网络要比3G快很多</strong></p>
+<h2 id="DNS请求">DNS请求</h2><p>一旦建立连接，浏览器会发送一个请求到<code>DNS（Domain Name System）</code>,负责将URL转换为实际的IP地址，这样浏览器就知道去哪里查找主机对应的网站</p>
+<h2 id="重定向">重定向</h2><p>有时候DNS会在告诉你IP之前，有可能会将请求重定向为新的url，举个栗子：你请求www.badu.com的时候，DNS有可能为你重定向为另外的一个www.cadu.com。这涉及到性能，因为任何的重定向会增加加载过程的时间。重定向不仅会发生在不同domain之间，也可能发生在同一站点的子域名。更复杂的情况有可能会有多重重定向来定位实际的站点。这会增加页面加载时间。</p>
+<h2 id="HTTP请求">HTTP请求</h2><p>一旦浏览器找到服务器的IP地址，就会向服务器发送http请求，也会在请求头增加一些关键属性。栗如<code>user agent</code>，来告诉服务器请求者的操作系统以及浏览器。如果服务器知道请求来自于移动端，它可能会发送一个mobile版本的页面而不是常规的desktop的页面。栗如m.jd.com.</p>
+<h2 id="发送HTML文件">发送HTML文件</h2><p>服务器收到http请求之后，会发送一个响应，通常是html页面以及携带的响应头。响应头包含额外的信息。栗如是否允许浏览器缓存资源，以及缓存多长时间</p>
+<h2 id="解压">解压</h2><p>客户端发送请求的时候就要告诉服务器浏览器可以接受什么格式的压缩文件(栗如gzip)。这样，服务器传送给client的html，<code>css</code>以及<code>js</code>文件会用gzip压缩，这样客户端的下载会更快，一旦接受到这些文件，浏览器会立马解压。</p>
+<h2 id="DOM">DOM</h2><p>接下来浏览器会解析html文档，创建文档对象模型（DOM），最后DOM代表了要显示的整个页面。然而如果你的<code>js</code>脚本事件改变的页面的内容，那么改变将会作用到DOM而不是html。</p>
+<h2 id="渲染head">渲染<strong>head</strong></h2><p>一旦DOM准备好之后，浏览器就会开始渲染HTML文档，每次一个元素，首先是<code>head</code>元素</p>
+<h3 id="外部资源">外部资源</h3><p>如果有<code>css</code>或者<code>javascript</code>文件，它会加载文件</p>
+<h3 id="并行加载">并行加载</h3><p>每个外部的文件连接（<code>css</code>或<code>js</code>）都需要一个单独的http请求，现在浏览器可以同时加载多个资源文件，但这个并行是有限制的。若浏览器缓存了资源（图片，<code>js</code>，<code>css</code>等），就不必要从服务器再请求了，具体的缓存策略看服务器的规定。</p>
+<h3 id="单线程执行">单线程执行</h3><p><code>js</code>脚本是单线程执行的，意味着浏览器同时只能执行一个文件。按照脚本在页面放置的先后顺序，包括以script标签的内联文件和外部资源文件，此时用户可能看到空白页，因为此时页面还没渲染，用户看不到任何东西。所以尽可能将<code>js</code>放置在页面底部，以加快页面渲染速度，给用户更好的体验。</p>
+<h2 id="渲染body">渲染<strong>body</strong></h2><p>接下来渲染<code>body</code>，浏览器会至上而下渲染每个元素，这时会需要<code>css</code>样式来计算每个元素的大小位置颜色等性质。</p>
+<h3 id="加载HTML_图像">加载HTML 图像</h3><p>浏览器碰到<code>img</code>元素时，会首先加载图像文件，对大文件会花比较长的时间加载，如果指定了高度和宽度，在没加载完成前，用户看到的是一个白框。响应式设计中没必要指定宽高，因为图像有可能不同，尺寸依赖于viewport的宽度而定。</p>
+<h3 id="加载背景图">加载背景图</h3><p>浏览器在<code>css</code>中碰到背景图时，会从url加载对应的图片</p>
+<h3 id="javascript">javascript</h3><p>在<code>body</code>中碰到<code>javascript</code>时，浏览器的渲染会暂停，以执行脚本。脚本执行完之后接着渲染</p>
+<h2 id="onload事件">onload事件</h2><p>在所有的页面元素加载和渲染完成之后，document会执行onload的<code>javascript</code>函数，onload意味着只要页面一完成加载就会被触发。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>简要说明html5中页面是如何加载渲染的<br>]]>
+    
+    </summary>
+    
+      <category term="Loaded" scheme="http://chiva-zhao.github.io/tags/Loaded/"/>
+    
+      <category term="html5" scheme="http://chiva-zhao.github.io/tags/html5/"/>
+    
+      <category term="html5" scheme="http://chiva-zhao.github.io/categories/html5/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[微信JS接口签名的生成]]></title>
+    <link href="http://chiva-zhao.github.io/2015/10/27/weixin-js-signature/"/>
+    <id>http://chiva-zhao.github.io/2015/10/27/weixin-js-signature/</id>
+    <published>2015-10-27T03:35:11.000Z</published>
+    <updated>2015-10-27T04:17:38.000Z</updated>
+    <content type="html"><![CDATA[<p>简要说明微信JS接口签名的生成方式<br><a id="more"></a></p>
+<h2 id="签名生成规则">签名生成规则</h2><ol>
+<li>参与签名的字段包括有效的 jsapi_ticket（获取方式详见微信 JSSDK 文档）， noncestr （随机字符串，由开发者随机生成），timestamp （由开发者生成的当前时间戳）， url（当前网页的URL，不包含#及其后面部分。注意：对于没有只有域名没有 path 的 URL ，浏览器会自动加上 / 作为 path，如打开 <a href="http://qq.com" target="_blank" rel="external">http://qq.com</a> 则获取到的 URL 为 <a href="http://qq.com/）。" target="_blank" rel="external">http://qq.com/）。</a></li>
+<li>对所有待签名参数按照字段名的 ASCII 码从小到大排序（字典序）后，使用 URL 键值对的格式（即key1=value1&amp;key2=value2…）拼接成字符串 string1。这里需要注意的是所有参数名均为<code>小写字符</code>。</li>
+<li>接下来对 string1 作 sha1 加密，字段名和字段值都采用原始值，不进行 URL 转义。即 signature=sha1(string1)。</li>
+</ol>
+<h2 id="示例">示例</h2><ul>
+<li>noncestr=Wm3WZYTPz0wzccnW</li>
+<li>jsapi_ticket=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_90u5h9nbSlYy3-Sl-HhTdfl2fzFy1AOcHKP7qg</li>
+<li>timestamp=1414587457</li>
+<li>url=<a href="http://mp.weixin.qq.com" target="_blank" rel="external">http://mp.weixin.qq.com</a><br>对所有待签名参数按照字段名的ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1&amp;key2=value2…）拼接成字符串：<br>jsapi_ticket=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_90u5h9nbSlYy3-Sl-HhTdfl2fzFy1AOcHKP7qg&amp;noncestr=Wm3WZYTPz0wzccnW&amp;timestamp=1414587457&amp;url=<a href="http://mp.weixin.qq.com" target="_blank" rel="external">http://mp.weixin.qq.com</a></li>
+</ul>
+<h2 id="附关键代码如下：">附关键代码如下：</h2><p>服务器端：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@RequestMapping</span>(<span class="string">"/app1/index/**"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">(HttpServletRequest request, Model model)</span> </span>&#123;</span><br><span class="line">	SignPackage signPackage = <span class="keyword">new</span> SignPackage();</span><br><span class="line">	signPackage.setAppId(properties.getCorpID());</span><br><span class="line">	String nonce_str = SignUtil.create_nonce_str();</span><br><span class="line">	String timestamp = SignUtil.create_timestamp();</span><br><span class="line">	signPackage.setNonceStr(nonce_str);</span><br><span class="line">	signPackage.setTimestamp(timestamp);</span><br><span class="line">	String url = getFullURL(request);</span><br><span class="line">	signPackage.setUrl(url);</span><br><span class="line">	String rawString = <span class="string">"jsapi_ticket="</span> + weixinUtil.getJsApiTicket() + <span class="string">"&amp;noncestr="</span> + nonce_str + <span class="string">"&amp;timestamp="</span> + timestamp + <span class="string">"&amp;url="</span> + url;</span><br><span class="line">	signPackage.setRawString(rawString);</span><br><span class="line">	String signature = SignUtil.getSignature(rawString);</span><br><span class="line">	signPackage.setSignature(signature);</span><br><span class="line">	model.addAttribute(<span class="string">"signPackage"</span>, signPackage);</span><br><span class="line">	<span class="keyword">return</span> <span class="string">"index"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>前端：</p>
+<pre><code class="javascript">wx.config({
+        debug: <span class="literal">true</span>, 
+        appId: <span class="comment">/*[[${signPackage.appId}]]*/</span>  , <span class="comment">// 必填，企业号的唯一标识，此处填写企业号corpid</span>
+        timestamp:<span class="comment">/*[[${signPackage.timestamp}]]*/</span>, <span class="comment">// 必填，生成签名的时间戳</span>
+        nonceStr: <span class="comment">/*[[${signPackage.nonceStr}]]*/</span>, <span class="comment">// 必填，生成签名的随机串</span>
+        signature: <span class="comment">/*[[${signPackage.signature}]]*/</span>,<span class="comment">// 必填，签名</span>
+        jsApiList: [<span class="string">'onMenuShareTimeline'</span>,
+                    <span class="string">'onMenuShareAppMessage'</span>,
+                    <span class="string">'onMenuShareQQ'</span>,
+                    <span class="string">'onMenuShareWeibo'</span>,
+                    <span class="string">'onMenuShareQZone'</span>,
+                    <span class="string">'startRecord'</span>,
+                    <span class="string">'stopRecord'</span>,
+                    <span class="string">'onVoiceRecordEnd'</span>,
+                    <span class="string">'playVoice'</span>,
+                    <span class="string">'pauseVoice'</span>,
+                    <span class="string">'stopVoice'</span>,
+                    <span class="string">'onVoicePlayEnd'</span>,
+                    <span class="string">'uploadVoice'</span>,
+                    <span class="string">'downloadVoice'</span>,
+                    <span class="string">'chooseImage'</span>,
+                    <span class="string">'previewImage'</span>,
+                    <span class="string">'uploadImage'</span>,
+                    <span class="string">'downloadImage'</span>,
+                    <span class="string">'translateVoice'</span>,
+                    <span class="string">'getNetworkType'</span>,
+                    <span class="string">'openLocation'</span>,
+                    <span class="string">'getLocation'</span>,
+                    <span class="string">'hideOptionMenu'</span>,
+                    <span class="string">'showOptionMenu'</span>,
+                    <span class="string">'hideMenuItems'</span>,
+                    <span class="string">'showMenuItems'</span>,
+                    <span class="string">'hideAllNonBaseMenuItem'</span>,
+                    <span class="string">'showAllNonBaseMenuItem'</span>,
+                    <span class="string">'closeWindow'</span>,
+                    <span class="string">'scanQRCode'</span>,
+                    <span class="string">'openEnterpriseChat'</span>] <span class="comment">// 必填，需要使用的JS接口列表</span>
+    });
+</code></pre>
+<h2 id="调试工具">调试工具</h2><p>完成之后用微信提供的<code>微信 JS 接口签名校验工具</code>（见参考资料），测试下你的代码是否正确：<br>如：我用调试工具生成的签名为：</p>
+<blockquote>
+<p>string1<br>jsapi_ticket=kgt8ON7yVITDhtdwci0qedLDDKuuDrvRIUFjARG8IV2iSprW5hisX7plWfW118kfjL5h9yCcVW3MZGmy4ehqmA&amp;noncestr=0e88fc6a-7dab-432c-90c8-d4e538b2f854&amp;timestamp=1445916761&amp;url=<a href="http://localhost:8030/app1/index" target="_blank" rel="external">http://localhost:8030/app1/index</a><br>signature<br>c1d2af21d510d998310f79ace8254fac0ebb895a</p>
+</blockquote>
+<p>对比在我本地打印出来的签名跟调试工具生成的签名是一致的，说明签名算法通过。</p>
+<p>另外，在微信里面打开测试页面，显示：<br><code>{&quot;errMsg&quot;:&quot;config:ok&quot;}</code><br>说明签名验证通过，你可以使用微信提供的jsapi了。</p>
+<h2 id="参考资料">参考资料</h2><ul>
+<li><a href="http://qydev.weixin.qq.com/wiki/index.php?title=%E5%BE%AE%E4%BF%A1JS-SDK%E6%8E%A5%E5%8F%A3#.E9.99.84.E5.BD.951-JS-SDK.E4.BD.BF.E7.94.A8.E6.9D.83.E9.99.90.E7.AD.BE.E5.90.8D.E7.AE.97.E6.B3.95" target="_blank" rel="external">附录1-JS-SDK使用权限签名算法</a></li>
+<li><a href="http://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=jsapisign" target="_blank" rel="external">微信 JS 接口签名校验工具</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>简要说明微信JS接口签名的生成方式<br>]]>
+    
+    </summary>
+    
+      <category term="jsapi" scheme="http://chiva-zhao.github.io/tags/jsapi/"/>
+    
+      <category term="signature" scheme="http://chiva-zhao.github.io/tags/signature/"/>
+    
+      <category term="微信" scheme="http://chiva-zhao.github.io/categories/%E5%BE%AE%E4%BF%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[响应式web设计笔记(2) viewport]]></title>
+    <link href="http://chiva-zhao.github.io/2015/10/26/html5-viewport/"/>
+    <id>http://chiva-zhao.github.io/2015/10/26/html5-viewport/</id>
+    <published>2015-10-26T06:12:49.000Z</published>
+    <updated>2015-10-26T06:53:50.000Z</updated>
+    <content type="html"><![CDATA[<p>介绍响应式设计重要的meta属性<code>viewport</code><br><a id="more"></a></p>
+<h2 id="什么是viewport">什么是<code>viewport</code></h2><p>一句话介绍：<code>viewport</code>就是你在pc，手机等终端屏幕上查看的页面的大小。<br>在响应式设计中用到的media query技术就是基于<code>viewport</code>的宽度来实现的。</p>
+<ol>
+<li>在PC上，打开浏览器窗口，干掉菜单栏，工具条，滚动条等剩下的就是所谓的<code>viewport</code>。</li>
+<li>在手机浏览器上，如果没有设置<code>viewport</code>的话，默认显示跟pc上的浏览器是一样的，会缩小页面显示内容以适配移动端的页面大小。<br>大部分移动端的浏览器将会以默认980像素的宽度渲染页面。</li>
+<li>一般来说，响应式设计的<code>viewport</code>设置如下：<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">"viewport"</span> <span class="attribute">content</span>=<span class="value">"width=device-width,initial-scale=1"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>下面是<code>viewport</code>的一些常用属性</p>
+<h2 id="viewport属性">viewport属性</h2><h3 id="width">width</h3><p><code>width=device-width</code>告诉浏览器全屏渲染页面，浏览器将以终端屏幕的实际宽度（100%）来渲染页面<br>如果没指定<code>viewport</code>，移动终端会以默认的980像素的设置来渲染页面，如果你的移动设备是320像素，那么会缩放大约1/3比例来显示980像素应该显示的内容。<br>设置了<code>width=device-width</code>，那么当横屏的时候，渲染的宽度会自动适配——将变宽来适应你的屏幕大小。例如在320*480的屏幕上，横屏，那么宽度会适配为480.</p>
+<h3 id="initial-scale">initial-scale</h3><p><code>initial-scale</code>属性会告诉浏览器在页面首次加载的时候如何缩放页面，也就是常说的缩放因子.<br><code>initial-scale=1</code>意思是页面将以width属性的大小来渲染页面，不会缩放。如果这个值设置为大于1，例如2，那么页面将会放大到原来的两倍。你看到的页面会是一半。</p>
+<h3 id="user-scalable">user-scalable</h3><p>移动设备运行用户对页面进行缩放。如果设置为<code>user-scalable=no</code>，将不允许用户对页面缩放操作<br>然而不建议设置为no，虽说响应式的网站总能以全屏的风格显示网站，但也应该允许用户缩放，万一有一些需求：比如想放大看某些局部内容，或者老人看字不太方便想放大的时候。</p>
+<h3 id="maximun-scale">maximun-scale</h3><p>可以使用<code>maximum-scale</code>来设置缩放的最大级别。<code>maximum-scale=2</code>意味着允许用户最多放大到页面的两倍。<br>设置<code>maximum-scale=1</code>将不允许用户缩放，跟<code>user-scalable=1</code>效果没什么区别，跟上面同理不应该设置为1.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>介绍响应式设计重要的meta属性<code>viewport</code><br>]]>
+    
+    </summary>
+    
+      <category term="html5" scheme="http://chiva-zhao.github.io/tags/html5/"/>
+    
+      <category term="viewport" scheme="http://chiva-zhao.github.io/tags/viewport/"/>
+    
+      <category term="html5" scheme="http://chiva-zhao.github.io/categories/html5/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[企业公众号全局缓存access_token和jsapi_ticket]]></title>
+    <link href="http://chiva-zhao.github.io/2015/10/26/weixin-cache-token/"/>
+    <id>http://chiva-zhao.github.io/2015/10/26/weixin-cache-token/</id>
+    <published>2015-10-26T04:24:12.000Z</published>
+    <updated>2015-10-26T04:51:31.000Z</updated>
+    <content type="html"><![CDATA[<p>在企业公众号中全局缓存access_token和jsapi_ticket的方案<br><a id="more"></a></p>
+<h2 id="说明">说明</h2><blockquote>
+<p>在每次主动调用企业号接口时需要带上<code>AccessToken</code>参数。<code>AccessToken</code>参数由<code>CorpID</code>和<code>Secret</code>换取。<br><code>AccessToken</code>是企业号的全局唯一票据，调用接口时需携带<code>AccessToken</code>。正常情况下<code>AccessToken</code>有效期为7200秒，有效期内重复获取返回相同结果；有效期内有接口交互（包括获取<code>AccessToken</code>的接口），会自动续期</p>
+</blockquote>
+<h3 id="主动调用的频率限制">主动调用的频率限制</h3><p>当你获取到AccessToken时，你的应用就可以成功调用企业号后台所提供的各种接口以管理或访问企业号后台的资源或给企业号成员发消息。<br>为了防止企业应用的程序错误而引发企业号服务器负载异常，默认情况下，每个企业号调用接口都有一定的频率限制，当超过此限制时，调用对应接口会收到相应错误码。<br>以下是当前默认的频率限制，企业号后台可能会根据运营情况调整此阈值：</p>
+<ol>
+<li>基础频率<br>每企业调用单个cgi/api不可超过1000次/分，30000次/小时<br>每ip调用单个cgi/api不可超过2000次/分，60000次/小时<br>第三方应用提供商由于需要同时服务于多个企业，ip频率限制如下：每ip调用单个cgi/api不可超过20000次/分，600000次/小时</li>
+<li>发消息频率<br>每企业不可超过帐号上限数*30人次/天</li>
+<li>创建帐号频率<br>每企业创建帐号数不可超过帐号上限数*3/月</li>
+<li>创建应用频率<br>每企业最大应用数限制为30个，创建应用次数不可超过30*3/月<br>在企业公众号的API接口调用中，每次请求都必须带access_token，如果是使用jsapi的话也要获取jsapi_ticket，并放入请求参数中，</li>
+</ol>
+<h3 id="jsapi_ticket">jsapi_ticket</h3><p><code>jsapi_ticket</code>是企业号号用于调用微信JS接口的临时票据。正常情况下，<code>jsapi_ticket</code>的有效期为7200秒，通过<code>access_token</code>来获取。由于获取<code>jsapi_ticket</code>的api调用次数非常有限，频繁刷新<code>jsapi_ticket</code>会导致api调用受限，影响自身业务，开发者必须在自己的服务全局缓存<code>jsapi_ticket</code>。</p>
+<h2 id="缓存方案">缓存方案</h2><p>说起来也比较简单，就是将从服务器端获取到的token和ticket保存到本地properties文件中，每次调用之前用已保存的超期时间<code>expires_in</code>与当前时间比较，如果发现已超期，就主动从微信服务器上获取。</p>
+<p>附关键代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getAccessToken</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	String access_token = <span class="string">""</span>;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		Resource tokenFile = properties.getTokenFile();</span><br><span class="line">		Properties wxprop = PropertiesLoaderUtils.loadProperties(tokenFile);</span><br><span class="line">		String expires = wxprop.getProperty(WxConstant.EXPIRES_IN);</span><br><span class="line">		<span class="keyword">long</span> now = Calendar.getInstance().getTimeInMillis() / <span class="number">1000</span>;</span><br><span class="line">		<span class="keyword">if</span> (expires != <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">long</span> expires_in = Long.parseLong(wxprop.getProperty(WxConstant.EXPIRES_IN));</span><br><span class="line">			<span class="keyword">if</span> (expires_in &lt; now) &#123;</span><br><span class="line">				access_token = getFromServer(tokenFile, wxprop, now, WxConstant.ACCESS_TOKEN);</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				access_token = wxprop.getProperty(WxConstant.ACCESS_TOKEN);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			access_token = getFromServer(tokenFile, wxprop, now, WxConstant.ACCESS_TOKEN);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> access_token;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getJsApiTicket</span><span class="params">()</span> <span class="keyword">throws</span> WeixinException </span>&#123;</span><br><span class="line">	String jsApiTicket = <span class="string">""</span>;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		Resource tokenFile = properties.getTokenFile();</span><br><span class="line">		Properties wxprop = PropertiesLoaderUtils.loadProperties(tokenFile);</span><br><span class="line">		String expires = wxprop.getProperty(WxConstant.EXPIRE_TIME);</span><br><span class="line">		<span class="keyword">long</span> now = Calendar.getInstance().getTimeInMillis() / <span class="number">1000</span>;</span><br><span class="line">		<span class="keyword">if</span> (expires != <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">long</span> expire_time = Long.parseLong(wxprop.getProperty(WxConstant.EXPIRE_TIME));</span><br><span class="line">			<span class="keyword">if</span> (expire_time &lt; now) &#123;</span><br><span class="line">				jsApiTicket = getFromServer(tokenFile, wxprop, now, WxConstant.JSAPI_TICKET);</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				jsApiTicket = wxprop.getProperty(WxConstant.JSAPI_TICKET);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			jsApiTicket = getFromServer(tokenFile, wxprop, now, WxConstant.JSAPI_TICKET);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> jsApiTicket;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="参考文档">参考文档</h2><ul>
+<li><a href="http://qydev.weixin.qq.com/wiki/index.php?title=%E5%BE%AE%E4%BF%A1JS-SDK%E6%8E%A5%E5%8F%A3" target="_blank" rel="external">微信JS-SDK说明文档</a></li>
+<li><a href="http://qydev.weixin.qq.com/wiki/index.php?title=%E4%B8%BB%E5%8A%A8%E8%B0%83%E7%94%A8" target="_blank" rel="external">主动调用</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>在企业公众号中全局缓存access_token和jsapi_ticket的方案<br>]]>
+    
+    </summary>
+    
+      <category term="access_token" scheme="http://chiva-zhao.github.io/tags/access-token/"/>
+    
+      <category term="jsapi_ticket" scheme="http://chiva-zhao.github.io/tags/jsapi-ticket/"/>
+    
+      <category term="微信" scheme="http://chiva-zhao.github.io/categories/%E5%BE%AE%E4%BF%A1/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[企业公众号回调URL及密钥的配置]]></title>

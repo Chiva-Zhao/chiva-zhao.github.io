@@ -3,6 +3,116 @@
 
     
   <url>
+    <loc>http://chiva-zhao.github.io/2015/11/11/weixin-upload/</loc>
+    <lastmod>2015-11-11T14:18:35.169Z</lastmod>
+    <data>
+        <display>
+        <title>通过微信公众号上次媒体文件</title>
+        <pubTime>2015-11-11T14:05:54.000Z</pubTime>
+        
+        <tag>upload </tag>
+         
+        <tag>weixin </tag>
+         
+         
+           
+             
+              <breadCrumb title="微信" url="http://chiva-zhao.github.io/categories/%E5%BE%AE%E4%BF%A1/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chiva-zhao.github.io/2015/10/29/html5-how-pages-loaded/</loc>
+    <lastmod>2015-10-29T07:33:06.000Z</lastmod>
+    <data>
+        <display>
+        <title>响应式web设计笔记(3) 页面如何加载渲染</title>
+        <pubTime>2015-10-29T06:26:59.000Z</pubTime>
+        
+        <tag>Loaded </tag>
+         
+        <tag>html5 </tag>
+         
+         
+           
+             
+              <breadCrumb title="html5" url="http://chiva-zhao.github.io/categories/html5/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chiva-zhao.github.io/2015/10/27/weixin-js-signature/</loc>
+    <lastmod>2015-10-27T04:17:38.000Z</lastmod>
+    <data>
+        <display>
+        <title>微信JS接口签名的生成</title>
+        <pubTime>2015-10-27T03:35:11.000Z</pubTime>
+        
+        <tag>jsapi </tag>
+         
+        <tag>signature </tag>
+         
+         
+           
+             
+              <breadCrumb title="微信" url="http://chiva-zhao.github.io/categories/%E5%BE%AE%E4%BF%A1/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chiva-zhao.github.io/2015/10/26/html5-viewport/</loc>
+    <lastmod>2015-10-26T06:53:50.000Z</lastmod>
+    <data>
+        <display>
+        <title>响应式web设计笔记(2) viewport</title>
+        <pubTime>2015-10-26T06:12:49.000Z</pubTime>
+        
+        <tag>html5 </tag>
+         
+        <tag>viewport </tag>
+         
+         
+           
+             
+              <breadCrumb title="html5" url="http://chiva-zhao.github.io/categories/html5/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://chiva-zhao.github.io/2015/10/26/weixin-cache-token/</loc>
+    <lastmod>2015-10-26T04:51:31.000Z</lastmod>
+    <data>
+        <display>
+        <title>企业公众号全局缓存access_token和jsapi_ticket</title>
+        <pubTime>2015-10-26T04:24:12.000Z</pubTime>
+        
+        <tag>access_token </tag>
+         
+        <tag>jsapi_ticket </tag>
+         
+         
+           
+             
+              <breadCrumb title="微信" url="http://chiva-zhao.github.io/categories/%E5%BE%AE%E4%BF%A1/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://chiva-zhao.github.io/2015/10/23/weixin-verify/</loc>
     <lastmod>2015-10-23T09:00:50.000Z</lastmod>
     <data>

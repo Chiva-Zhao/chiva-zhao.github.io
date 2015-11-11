@@ -4,23 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>响应式web设计笔记(1) | Love Life, Love coding</title>
+    <title>响应式web设计笔记(2) viewport | Love Life, Love coding</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Chiva Zhao">
     
 
     
-    <meta name="description" content="简单介绍响应式设计的基本概念">
+    <meta name="description" content="介绍响应式设计重要的meta属性viewport">
 <meta property="og:type" content="article">
-<meta property="og:title" content="响应式web设计笔记(1)">
-<meta property="og:url" content="http://chiva-zhao.github.io/2015/10/22/responsive-web-design/index.html">
+<meta property="og:title" content="响应式web设计笔记(2) viewport">
+<meta property="og:url" content="http://chiva-zhao.github.io/2015/10/26/html5-viewport/index.html">
 <meta property="og:site_name" content="Love Life, Love coding">
-<meta property="og:description" content="简单介绍响应式设计的基本概念">
-<meta property="og:updated_time" content="2015-10-22T03:35:09.000Z">
+<meta property="og:description" content="介绍响应式设计重要的meta属性viewport">
+<meta property="og:updated_time" content="2015-10-26T06:53:50.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="响应式web设计笔记(1)">
-<meta name="twitter:description" content="简单介绍响应式设计的基本概念">
+<meta name="twitter:title" content="响应式web设计笔记(2) viewport">
+<meta name="twitter:description" content="介绍响应式设计重要的meta属性viewport">
 <meta name="twitter:creator" content="@59205240">
 
     
@@ -80,33 +80,32 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/10/22/responsive-web-design/" title="响应式web设计笔记(1)" itemprop="url">响应式web设计笔记(1)</a>
+      <a href="/2015/10/26/html5-viewport/" title="响应式web设计笔记(2) viewport" itemprop="url">响应式web设计笔记(2) viewport</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Chiva Zhao" target="_blank" itemprop="author">Chiva Zhao</a>
 		
   <p class="article-time">
-    <time datetime="2015-10-22T03:07:00.000Z" itemprop="datePublished"> 发表于 2015-10-22</time>
+    <time datetime="2015-10-26T06:12:49.000Z" itemprop="datePublished"> 发表于 2015-10-26</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
-		<p>简单介绍响应式设计的基本概念<br><a id="more"></a></p>
-<h2 id="什么是响应式设计">什么是响应式设计</h2><p>用一句话描述就是:你设计的网站在各个尺寸的终端上（<code>PC，mobile，tablet</code>等）被用户访问的时候，页面的布局，包括长宽以及图片的排版，可以自适应设备的系统，屏幕尺寸以及屏幕方向。</p>
-<h2 id="响应式设计的历史">响应式设计的历史</h2><blockquote>
-<p>2010年5月，<code>伊桑.马科特（Ethan Marcotte）</code>在“A List Apart”写了一篇开创性的文章（题为<code>Responsive Web Design</code> ），他利用三种已有的工具：<code>流动布局（fluid grids）</code>、<code>媒介查询（media queries）</code>和<code>弹性图片（scalable images）</code>创建了一个在不同分辨率屏幕下都能漂亮地显示的网站。 Ethan Marcotte力劝设计师们要去利用那些Web独有的特性去进行设计： “我们可以将不同联网设备上众多的体验，当作是同一网站体验的不同侧面来对待，而不要为每种设备进行单独剪裁而使得设计彼此断开，这才是我们前进的方向。虽然我们已经能够设计出最佳的视觉体验，但还要把基于标准的技术也嵌入到我们的设计中去，这样才能使得我们的设计不仅灵活，而且还能适应渲染它们的各种媒介。” Ethan Marcotte证明了一种在多种设备上都能提供卓越体验的方法的存在，而且这一方法不会忽视不同设备的差异，也不会强调设计师的控制权，而是选择了顺其自然并拥抱Web的灵活性。</p>
-</blockquote>
-<h2 id="设计原则">设计原则</h2><ol>
-<li>移动优先：在设计初期就要考虑页面如何在多终端显示<br>考虑IE8等不支持css3的兼容性，使用javascript来实现统一的显示效果。</li>
-<li>渐进增强：充分发挥硬件设备的最大功能</li>
+		<p>介绍响应式设计重要的meta属性<code>viewport</code><br><a id="more"></a></p>
+<h2 id="什么是viewport">什么是<code>viewport</code></h2><p>一句话介绍：<code>viewport</code>就是你在pc，手机等终端屏幕上查看的页面的大小。<br>在响应式设计中用到的media query技术就是基于<code>viewport</code>的宽度来实现的。</p>
+<ol>
+<li>在PC上，打开浏览器窗口，干掉菜单栏，工具条，滚动条等剩下的就是所谓的<code>viewport</code>。</li>
+<li>在手机浏览器上，如果没有设置<code>viewport</code>的话，默认显示跟pc上的浏览器是一样的，会缩小页面显示内容以适配移动端的页面大小。<br>大部分移动端的浏览器将会以默认980像素的宽度渲染页面。</li>
+<li>一般来说，响应式设计的<code>viewport</code>设置如下：<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">meta</span> <span class="attribute">name</span>=<span class="value">"viewport"</span> <span class="attribute">content</span>=<span class="value">"width=device-width,initial-scale=1"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
 </ol>
-<h2 id="实现响应式布局的一些方法">实现响应式布局的一些方法</h2><ul>
-<li>ccs3-Media Query     最简单的方式</li>
-<li>借助原生的javascript    成本高，不推荐使用</li>
-<li>第三方开源框架         可以很好的支持浏览器响应式布局的设计，例如有名的bootstrap</li>
-</ul>
+<p>下面是<code>viewport</code>的一些常用属性</p>
+<h2 id="viewport属性">viewport属性</h2><h3 id="width">width</h3><p><code>width=device-width</code>告诉浏览器全屏渲染页面，浏览器将以终端屏幕的实际宽度（100%）来渲染页面<br>如果没指定<code>viewport</code>，移动终端会以默认的980像素的设置来渲染页面，如果你的移动设备是320像素，那么会缩放大约1/3比例来显示980像素应该显示的内容。<br>设置了<code>width=device-width</code>，那么当横屏的时候，渲染的宽度会自动适配——将变宽来适应你的屏幕大小。例如在320*480的屏幕上，横屏，那么宽度会适配为480.</p>
+<h3 id="initial-scale">initial-scale</h3><p><code>initial-scale</code>属性会告诉浏览器在页面首次加载的时候如何缩放页面，也就是常说的缩放因子.<br><code>initial-scale=1</code>意思是页面将以width属性的大小来渲染页面，不会缩放。如果这个值设置为大于1，例如2，那么页面将会放大到原来的两倍。你看到的页面会是一半。</p>
+<h3 id="user-scalable">user-scalable</h3><p>移动设备运行用户对页面进行缩放。如果设置为<code>user-scalable=no</code>，将不允许用户对页面缩放操作<br>然而不建议设置为no，虽说响应式的网站总能以全屏的风格显示网站，但也应该允许用户缩放，万一有一些需求：比如想放大看某些局部内容，或者老人看字不太方便想放大的时候。</p>
+<h3 id="maximun-scale">maximun-scale</h3><p>可以使用<code>maximum-scale</code>来设置缩放的最大级别。<code>maximum-scale=2</code>意味着允许用户最多放大到页面的两倍。<br>设置<code>maximum-scale=1</code>将不允许用户缩放，跟<code>user-scalable=1</code>效果没什么区别，跟上面同理不应该设置为1.</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -114,9 +113,14 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/web/">web</a>
+  <a class="article-category-link" href="/categories/html5/">html5</a>
 </div>
 
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/html5/">html5</a><a href="/tags/viewport/">viewport</a>
+  </div>
 
 </div>
 
@@ -124,7 +128,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://chiva-zhao.github.io/2015/10/22/responsive-web-design/" data-title="响应式web设计笔记(1) | Love Life, Love coding" data-tsina="undefined" class="share clearfix">
+	  <div data-url="http://chiva-zhao.github.io/2015/10/26/html5-viewport/" data-title="响应式web设计笔记(2) viewport | Love Life, Love coding" data-tsina="undefined" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -138,18 +142,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/10/23/weixin-verify/" title="企业公众号回调URL及密钥的配置">
+ <a href="/2015/10/27/weixin-js-signature/" title="微信JS接口签名的生成">
   <strong>上一篇：</strong><br/>
   <span>
-  企业公众号回调URL及密钥的配置</span>
+  微信JS接口签名的生成</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2015/10/21/fancybox/"  title="我的阅历">
+<a href="/2015/10/26/weixin-cache-token/"  title="企业公众号全局缓存access_token和jsapi_ticket">
  <strong>下一篇：</strong><br/> 
- <span>我的阅历
+ <span>企业公众号全局缓存access_token和jsapi_ticket
 </span>
 </a>
 </div>
@@ -158,7 +162,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/10/22/responsive-web-design/" data-title="响应式web设计笔记(1)" data-url="http://chiva-zhao.github.io/2015/10/22/responsive-web-design/"></div>
+	<div class="ds-thread" data-thread-key="2015/10/26/html5-viewport/" data-title="响应式web设计笔记(2) viewport" data-url="http://chiva-zhao.github.io/2015/10/26/html5-viewport/"></div>
 </section>
 
 
@@ -168,7 +172,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是响应式设计"><span class="toc-number">1.</span> <span class="toc-text">什么是响应式设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#响应式设计的历史"><span class="toc-number">2.</span> <span class="toc-text">响应式设计的历史</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设计原则"><span class="toc-number">3.</span> <span class="toc-text">设计原则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现响应式布局的一些方法"><span class="toc-number">4.</span> <span class="toc-text">实现响应式布局的一些方法</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是viewport"><span class="toc-number">1.</span> <span class="toc-text">什么是viewport</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#viewport属性"><span class="toc-number">2.</span> <span class="toc-text">viewport属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#width"><span class="toc-number">2.1.</span> <span class="toc-text">width</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#initial-scale"><span class="toc-number">2.2.</span> <span class="toc-text">initial-scale</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#user-scalable"><span class="toc-number">2.3.</span> <span class="toc-text">user-scalable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#maximun-scale"><span class="toc-number">2.4.</span> <span class="toc-text">maximun-scale</span></a></li></ol></li></ol>
  
   </div>
 

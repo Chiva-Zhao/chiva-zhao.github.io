@@ -4,23 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>响应式web设计笔记(1) | Love Life, Love coding</title>
+    <title>微信JS接口签名的生成 | Love Life, Love coding</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Chiva Zhao">
     
 
     
-    <meta name="description" content="简单介绍响应式设计的基本概念">
+    <meta name="description" content="简要说明微信JS接口签名的生成方式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="响应式web设计笔记(1)">
-<meta property="og:url" content="http://chiva-zhao.github.io/2015/10/22/responsive-web-design/index.html">
+<meta property="og:title" content="微信JS接口签名的生成">
+<meta property="og:url" content="http://chiva-zhao.github.io/2015/10/27/weixin-js-signature/index.html">
 <meta property="og:site_name" content="Love Life, Love coding">
-<meta property="og:description" content="简单介绍响应式设计的基本概念">
-<meta property="og:updated_time" content="2015-10-22T03:35:09.000Z">
+<meta property="og:description" content="简要说明微信JS接口签名的生成方式">
+<meta property="og:updated_time" content="2015-10-27T04:17:38.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="响应式web设计笔记(1)">
-<meta name="twitter:description" content="简单介绍响应式设计的基本概念">
+<meta name="twitter:title" content="微信JS接口签名的生成">
+<meta name="twitter:description" content="简要说明微信JS接口签名的生成方式">
 <meta name="twitter:creator" content="@59205240">
 
     
@@ -80,32 +80,81 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/10/22/responsive-web-design/" title="响应式web设计笔记(1)" itemprop="url">响应式web设计笔记(1)</a>
+      <a href="/2015/10/27/weixin-js-signature/" title="微信JS接口签名的生成" itemprop="url">微信JS接口签名的生成</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Chiva Zhao" target="_blank" itemprop="author">Chiva Zhao</a>
 		
   <p class="article-time">
-    <time datetime="2015-10-22T03:07:00.000Z" itemprop="datePublished"> 发表于 2015-10-22</time>
+    <time datetime="2015-10-27T03:35:11.000Z" itemprop="datePublished"> 发表于 2015-10-27</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
-		<p>简单介绍响应式设计的基本概念<br><a id="more"></a></p>
-<h2 id="什么是响应式设计">什么是响应式设计</h2><p>用一句话描述就是:你设计的网站在各个尺寸的终端上（<code>PC，mobile，tablet</code>等）被用户访问的时候，页面的布局，包括长宽以及图片的排版，可以自适应设备的系统，屏幕尺寸以及屏幕方向。</p>
-<h2 id="响应式设计的历史">响应式设计的历史</h2><blockquote>
-<p>2010年5月，<code>伊桑.马科特（Ethan Marcotte）</code>在“A List Apart”写了一篇开创性的文章（题为<code>Responsive Web Design</code> ），他利用三种已有的工具：<code>流动布局（fluid grids）</code>、<code>媒介查询（media queries）</code>和<code>弹性图片（scalable images）</code>创建了一个在不同分辨率屏幕下都能漂亮地显示的网站。 Ethan Marcotte力劝设计师们要去利用那些Web独有的特性去进行设计： “我们可以将不同联网设备上众多的体验，当作是同一网站体验的不同侧面来对待，而不要为每种设备进行单独剪裁而使得设计彼此断开，这才是我们前进的方向。虽然我们已经能够设计出最佳的视觉体验，但还要把基于标准的技术也嵌入到我们的设计中去，这样才能使得我们的设计不仅灵活，而且还能适应渲染它们的各种媒介。” Ethan Marcotte证明了一种在多种设备上都能提供卓越体验的方法的存在，而且这一方法不会忽视不同设备的差异，也不会强调设计师的控制权，而是选择了顺其自然并拥抱Web的灵活性。</p>
-</blockquote>
-<h2 id="设计原则">设计原则</h2><ol>
-<li>移动优先：在设计初期就要考虑页面如何在多终端显示<br>考虑IE8等不支持css3的兼容性，使用javascript来实现统一的显示效果。</li>
-<li>渐进增强：充分发挥硬件设备的最大功能</li>
+		<p>简要说明微信JS接口签名的生成方式<br><a id="more"></a></p>
+<h2 id="签名生成规则">签名生成规则</h2><ol>
+<li>参与签名的字段包括有效的 jsapi_ticket（获取方式详见微信 JSSDK 文档）， noncestr （随机字符串，由开发者随机生成），timestamp （由开发者生成的当前时间戳）， url（当前网页的URL，不包含#及其后面部分。注意：对于没有只有域名没有 path 的 URL ，浏览器会自动加上 / 作为 path，如打开 <a href="http://qq.com" target="_blank" rel="external">http://qq.com</a> 则获取到的 URL 为 <a href="http://qq.com/）。" target="_blank" rel="external">http://qq.com/）。</a></li>
+<li>对所有待签名参数按照字段名的 ASCII 码从小到大排序（字典序）后，使用 URL 键值对的格式（即key1=value1&amp;key2=value2…）拼接成字符串 string1。这里需要注意的是所有参数名均为<code>小写字符</code>。</li>
+<li>接下来对 string1 作 sha1 加密，字段名和字段值都采用原始值，不进行 URL 转义。即 signature=sha1(string1)。</li>
 </ol>
-<h2 id="实现响应式布局的一些方法">实现响应式布局的一些方法</h2><ul>
-<li>ccs3-Media Query     最简单的方式</li>
-<li>借助原生的javascript    成本高，不推荐使用</li>
-<li>第三方开源框架         可以很好的支持浏览器响应式布局的设计，例如有名的bootstrap</li>
+<h2 id="示例">示例</h2><ul>
+<li>noncestr=Wm3WZYTPz0wzccnW</li>
+<li>jsapi_ticket=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_90u5h9nbSlYy3-Sl-HhTdfl2fzFy1AOcHKP7qg</li>
+<li>timestamp=1414587457</li>
+<li>url=<a href="http://mp.weixin.qq.com" target="_blank" rel="external">http://mp.weixin.qq.com</a><br>对所有待签名参数按照字段名的ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1&amp;key2=value2…）拼接成字符串：<br>jsapi_ticket=sM4AOVdWfPE4DxkXGEs8VMCPGGVi4C3VM0P37wVUCFvkVAy_90u5h9nbSlYy3-Sl-HhTdfl2fzFy1AOcHKP7qg&amp;noncestr=Wm3WZYTPz0wzccnW&amp;timestamp=1414587457&amp;url=<a href="http://mp.weixin.qq.com" target="_blank" rel="external">http://mp.weixin.qq.com</a></li>
+</ul>
+<h2 id="附关键代码如下：">附关键代码如下：</h2><p>服务器端：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="annotation">@RequestMapping</span>(<span class="string">"/app1/index/**"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">(HttpServletRequest request, Model model)</span> </span>&#123;</span><br><span class="line">	SignPackage signPackage = <span class="keyword">new</span> SignPackage();</span><br><span class="line">	signPackage.setAppId(properties.getCorpID());</span><br><span class="line">	String nonce_str = SignUtil.create_nonce_str();</span><br><span class="line">	String timestamp = SignUtil.create_timestamp();</span><br><span class="line">	signPackage.setNonceStr(nonce_str);</span><br><span class="line">	signPackage.setTimestamp(timestamp);</span><br><span class="line">	String url = getFullURL(request);</span><br><span class="line">	signPackage.setUrl(url);</span><br><span class="line">	String rawString = <span class="string">"jsapi_ticket="</span> + weixinUtil.getJsApiTicket() + <span class="string">"&amp;noncestr="</span> + nonce_str + <span class="string">"&amp;timestamp="</span> + timestamp + <span class="string">"&amp;url="</span> + url;</span><br><span class="line">	signPackage.setRawString(rawString);</span><br><span class="line">	String signature = SignUtil.getSignature(rawString);</span><br><span class="line">	signPackage.setSignature(signature);</span><br><span class="line">	model.addAttribute(<span class="string">"signPackage"</span>, signPackage);</span><br><span class="line">	<span class="keyword">return</span> <span class="string">"index"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>前端：</p>
+<pre><code class="javascript">wx.config({
+        debug: <span class="literal">true</span>, 
+        appId: <span class="comment">/*[[${signPackage.appId}]]*/</span>  , <span class="comment">// 必填，企业号的唯一标识，此处填写企业号corpid</span>
+        timestamp:<span class="comment">/*[[${signPackage.timestamp}]]*/</span>, <span class="comment">// 必填，生成签名的时间戳</span>
+        nonceStr: <span class="comment">/*[[${signPackage.nonceStr}]]*/</span>, <span class="comment">// 必填，生成签名的随机串</span>
+        signature: <span class="comment">/*[[${signPackage.signature}]]*/</span>,<span class="comment">// 必填，签名</span>
+        jsApiList: [<span class="string">'onMenuShareTimeline'</span>,
+                    <span class="string">'onMenuShareAppMessage'</span>,
+                    <span class="string">'onMenuShareQQ'</span>,
+                    <span class="string">'onMenuShareWeibo'</span>,
+                    <span class="string">'onMenuShareQZone'</span>,
+                    <span class="string">'startRecord'</span>,
+                    <span class="string">'stopRecord'</span>,
+                    <span class="string">'onVoiceRecordEnd'</span>,
+                    <span class="string">'playVoice'</span>,
+                    <span class="string">'pauseVoice'</span>,
+                    <span class="string">'stopVoice'</span>,
+                    <span class="string">'onVoicePlayEnd'</span>,
+                    <span class="string">'uploadVoice'</span>,
+                    <span class="string">'downloadVoice'</span>,
+                    <span class="string">'chooseImage'</span>,
+                    <span class="string">'previewImage'</span>,
+                    <span class="string">'uploadImage'</span>,
+                    <span class="string">'downloadImage'</span>,
+                    <span class="string">'translateVoice'</span>,
+                    <span class="string">'getNetworkType'</span>,
+                    <span class="string">'openLocation'</span>,
+                    <span class="string">'getLocation'</span>,
+                    <span class="string">'hideOptionMenu'</span>,
+                    <span class="string">'showOptionMenu'</span>,
+                    <span class="string">'hideMenuItems'</span>,
+                    <span class="string">'showMenuItems'</span>,
+                    <span class="string">'hideAllNonBaseMenuItem'</span>,
+                    <span class="string">'showAllNonBaseMenuItem'</span>,
+                    <span class="string">'closeWindow'</span>,
+                    <span class="string">'scanQRCode'</span>,
+                    <span class="string">'openEnterpriseChat'</span>] <span class="comment">// 必填，需要使用的JS接口列表</span>
+    });
+</code></pre>
+<h2 id="调试工具">调试工具</h2><p>完成之后用微信提供的<code>微信 JS 接口签名校验工具</code>（见参考资料），测试下你的代码是否正确：<br>如：我用调试工具生成的签名为：</p>
+<blockquote>
+<p>string1<br>jsapi_ticket=kgt8ON7yVITDhtdwci0qedLDDKuuDrvRIUFjARG8IV2iSprW5hisX7plWfW118kfjL5h9yCcVW3MZGmy4ehqmA&amp;noncestr=0e88fc6a-7dab-432c-90c8-d4e538b2f854&amp;timestamp=1445916761&amp;url=<a href="http://localhost:8030/app1/index" target="_blank" rel="external">http://localhost:8030/app1/index</a><br>signature<br>c1d2af21d510d998310f79ace8254fac0ebb895a</p>
+</blockquote>
+<p>对比在我本地打印出来的签名跟调试工具生成的签名是一致的，说明签名算法通过。</p>
+<p>另外，在微信里面打开测试页面，显示：<br><code>{&quot;errMsg&quot;:&quot;config:ok&quot;}</code><br>说明签名验证通过，你可以使用微信提供的jsapi了。</p>
+<h2 id="参考资料">参考资料</h2><ul>
+<li><a href="http://qydev.weixin.qq.com/wiki/index.php?title=%E5%BE%AE%E4%BF%A1JS-SDK%E6%8E%A5%E5%8F%A3#.E9.99.84.E5.BD.951-JS-SDK.E4.BD.BF.E7.94.A8.E6.9D.83.E9.99.90.E7.AD.BE.E5.90.8D.E7.AE.97.E6.B3.95" target="_blank" rel="external">附录1-JS-SDK使用权限签名算法</a></li>
+<li><a href="http://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=jsapisign" target="_blank" rel="external">微信 JS 接口签名校验工具</a></li>
 </ul>
   
 	</div>
@@ -114,9 +163,14 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/web/">web</a>
+  <a class="article-category-link" href="/categories/微信/">微信</a>
 </div>
 
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/jsapi/">jsapi</a><a href="/tags/signature/">signature</a>
+  </div>
 
 </div>
 
@@ -124,7 +178,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://chiva-zhao.github.io/2015/10/22/responsive-web-design/" data-title="响应式web设计笔记(1) | Love Life, Love coding" data-tsina="undefined" class="share clearfix">
+	  <div data-url="http://chiva-zhao.github.io/2015/10/27/weixin-js-signature/" data-title="微信JS接口签名的生成 | Love Life, Love coding" data-tsina="undefined" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -138,18 +192,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/10/23/weixin-verify/" title="企业公众号回调URL及密钥的配置">
+ <a href="/2015/10/29/html5-how-pages-loaded/" title="响应式web设计笔记(3) 页面如何加载渲染">
   <strong>上一篇：</strong><br/>
   <span>
-  企业公众号回调URL及密钥的配置</span>
+  响应式web设计笔记(3) 页面如何加载渲染</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2015/10/21/fancybox/"  title="我的阅历">
+<a href="/2015/10/26/html5-viewport/"  title="响应式web设计笔记(2) viewport">
  <strong>下一篇：</strong><br/> 
- <span>我的阅历
+ <span>响应式web设计笔记(2) viewport
 </span>
 </a>
 </div>
@@ -158,7 +212,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/10/22/responsive-web-design/" data-title="响应式web设计笔记(1)" data-url="http://chiva-zhao.github.io/2015/10/22/responsive-web-design/"></div>
+	<div class="ds-thread" data-thread-key="2015/10/27/weixin-js-signature/" data-title="微信JS接口签名的生成" data-url="http://chiva-zhao.github.io/2015/10/27/weixin-js-signature/"></div>
 </section>
 
 
@@ -168,7 +222,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是响应式设计"><span class="toc-number">1.</span> <span class="toc-text">什么是响应式设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#响应式设计的历史"><span class="toc-number">2.</span> <span class="toc-text">响应式设计的历史</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设计原则"><span class="toc-number">3.</span> <span class="toc-text">设计原则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现响应式布局的一些方法"><span class="toc-number">4.</span> <span class="toc-text">实现响应式布局的一些方法</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#签名生成规则"><span class="toc-number">1.</span> <span class="toc-text">签名生成规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#示例"><span class="toc-number">2.</span> <span class="toc-text">示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#附关键代码如下："><span class="toc-number">3.</span> <span class="toc-text">附关键代码如下：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调试工具"><span class="toc-number">4.</span> <span class="toc-text">调试工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol>
  
   </div>
 

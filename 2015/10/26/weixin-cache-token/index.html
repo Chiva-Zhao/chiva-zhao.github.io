@@ -4,23 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>响应式web设计笔记(1) | Love Life, Love coding</title>
+    <title>企业公众号全局缓存access_token和jsapi_ticket | Love Life, Love coding</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Chiva Zhao">
     
 
     
-    <meta name="description" content="简单介绍响应式设计的基本概念">
+    <meta name="description" content="在企业公众号中全局缓存access_token和jsapi_ticket的方案">
 <meta property="og:type" content="article">
-<meta property="og:title" content="响应式web设计笔记(1)">
-<meta property="og:url" content="http://chiva-zhao.github.io/2015/10/22/responsive-web-design/index.html">
+<meta property="og:title" content="企业公众号全局缓存access_token和jsapi_ticket">
+<meta property="og:url" content="http://chiva-zhao.github.io/2015/10/26/weixin-cache-token/index.html">
 <meta property="og:site_name" content="Love Life, Love coding">
-<meta property="og:description" content="简单介绍响应式设计的基本概念">
-<meta property="og:updated_time" content="2015-10-22T03:35:09.000Z">
+<meta property="og:description" content="在企业公众号中全局缓存access_token和jsapi_ticket的方案">
+<meta property="og:updated_time" content="2015-10-26T04:51:31.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="响应式web设计笔记(1)">
-<meta name="twitter:description" content="简单介绍响应式设计的基本概念">
+<meta name="twitter:title" content="企业公众号全局缓存access_token和jsapi_ticket">
+<meta name="twitter:description" content="在企业公众号中全局缓存access_token和jsapi_ticket的方案">
 <meta name="twitter:creator" content="@59205240">
 
     
@@ -80,32 +80,36 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/10/22/responsive-web-design/" title="响应式web设计笔记(1)" itemprop="url">响应式web设计笔记(1)</a>
+      <a href="/2015/10/26/weixin-cache-token/" title="企业公众号全局缓存access_token和jsapi_ticket" itemprop="url">企业公众号全局缓存access_token和jsapi_ticket</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Chiva Zhao" target="_blank" itemprop="author">Chiva Zhao</a>
 		
   <p class="article-time">
-    <time datetime="2015-10-22T03:07:00.000Z" itemprop="datePublished"> 发表于 2015-10-22</time>
+    <time datetime="2015-10-26T04:24:12.000Z" itemprop="datePublished"> 发表于 2015-10-26</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
-		<p>简单介绍响应式设计的基本概念<br><a id="more"></a></p>
-<h2 id="什么是响应式设计">什么是响应式设计</h2><p>用一句话描述就是:你设计的网站在各个尺寸的终端上（<code>PC，mobile，tablet</code>等）被用户访问的时候，页面的布局，包括长宽以及图片的排版，可以自适应设备的系统，屏幕尺寸以及屏幕方向。</p>
-<h2 id="响应式设计的历史">响应式设计的历史</h2><blockquote>
-<p>2010年5月，<code>伊桑.马科特（Ethan Marcotte）</code>在“A List Apart”写了一篇开创性的文章（题为<code>Responsive Web Design</code> ），他利用三种已有的工具：<code>流动布局（fluid grids）</code>、<code>媒介查询（media queries）</code>和<code>弹性图片（scalable images）</code>创建了一个在不同分辨率屏幕下都能漂亮地显示的网站。 Ethan Marcotte力劝设计师们要去利用那些Web独有的特性去进行设计： “我们可以将不同联网设备上众多的体验，当作是同一网站体验的不同侧面来对待，而不要为每种设备进行单独剪裁而使得设计彼此断开，这才是我们前进的方向。虽然我们已经能够设计出最佳的视觉体验，但还要把基于标准的技术也嵌入到我们的设计中去，这样才能使得我们的设计不仅灵活，而且还能适应渲染它们的各种媒介。” Ethan Marcotte证明了一种在多种设备上都能提供卓越体验的方法的存在，而且这一方法不会忽视不同设备的差异，也不会强调设计师的控制权，而是选择了顺其自然并拥抱Web的灵活性。</p>
+		<p>在企业公众号中全局缓存access_token和jsapi_ticket的方案<br><a id="more"></a></p>
+<h2 id="说明">说明</h2><blockquote>
+<p>在每次主动调用企业号接口时需要带上<code>AccessToken</code>参数。<code>AccessToken</code>参数由<code>CorpID</code>和<code>Secret</code>换取。<br><code>AccessToken</code>是企业号的全局唯一票据，调用接口时需携带<code>AccessToken</code>。正常情况下<code>AccessToken</code>有效期为7200秒，有效期内重复获取返回相同结果；有效期内有接口交互（包括获取<code>AccessToken</code>的接口），会自动续期</p>
 </blockquote>
-<h2 id="设计原则">设计原则</h2><ol>
-<li>移动优先：在设计初期就要考虑页面如何在多终端显示<br>考虑IE8等不支持css3的兼容性，使用javascript来实现统一的显示效果。</li>
-<li>渐进增强：充分发挥硬件设备的最大功能</li>
+<h3 id="主动调用的频率限制">主动调用的频率限制</h3><p>当你获取到AccessToken时，你的应用就可以成功调用企业号后台所提供的各种接口以管理或访问企业号后台的资源或给企业号成员发消息。<br>为了防止企业应用的程序错误而引发企业号服务器负载异常，默认情况下，每个企业号调用接口都有一定的频率限制，当超过此限制时，调用对应接口会收到相应错误码。<br>以下是当前默认的频率限制，企业号后台可能会根据运营情况调整此阈值：</p>
+<ol>
+<li>基础频率<br>每企业调用单个cgi/api不可超过1000次/分，30000次/小时<br>每ip调用单个cgi/api不可超过2000次/分，60000次/小时<br>第三方应用提供商由于需要同时服务于多个企业，ip频率限制如下：每ip调用单个cgi/api不可超过20000次/分，600000次/小时</li>
+<li>发消息频率<br>每企业不可超过帐号上限数*30人次/天</li>
+<li>创建帐号频率<br>每企业创建帐号数不可超过帐号上限数*3/月</li>
+<li>创建应用频率<br>每企业最大应用数限制为30个，创建应用次数不可超过30*3/月<br>在企业公众号的API接口调用中，每次请求都必须带access_token，如果是使用jsapi的话也要获取jsapi_ticket，并放入请求参数中，</li>
 </ol>
-<h2 id="实现响应式布局的一些方法">实现响应式布局的一些方法</h2><ul>
-<li>ccs3-Media Query     最简单的方式</li>
-<li>借助原生的javascript    成本高，不推荐使用</li>
-<li>第三方开源框架         可以很好的支持浏览器响应式布局的设计，例如有名的bootstrap</li>
+<h3 id="jsapi_ticket">jsapi_ticket</h3><p><code>jsapi_ticket</code>是企业号号用于调用微信JS接口的临时票据。正常情况下，<code>jsapi_ticket</code>的有效期为7200秒，通过<code>access_token</code>来获取。由于获取<code>jsapi_ticket</code>的api调用次数非常有限，频繁刷新<code>jsapi_ticket</code>会导致api调用受限，影响自身业务，开发者必须在自己的服务全局缓存<code>jsapi_ticket</code>。</p>
+<h2 id="缓存方案">缓存方案</h2><p>说起来也比较简单，就是将从服务器端获取到的token和ticket保存到本地properties文件中，每次调用之前用已保存的超期时间<code>expires_in</code>与当前时间比较，如果发现已超期，就主动从微信服务器上获取。</p>
+<p>附关键代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getAccessToken</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	String access_token = <span class="string">""</span>;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		Resource tokenFile = properties.getTokenFile();</span><br><span class="line">		Properties wxprop = PropertiesLoaderUtils.loadProperties(tokenFile);</span><br><span class="line">		String expires = wxprop.getProperty(WxConstant.EXPIRES_IN);</span><br><span class="line">		<span class="keyword">long</span> now = Calendar.getInstance().getTimeInMillis() / <span class="number">1000</span>;</span><br><span class="line">		<span class="keyword">if</span> (expires != <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">long</span> expires_in = Long.parseLong(wxprop.getProperty(WxConstant.EXPIRES_IN));</span><br><span class="line">			<span class="keyword">if</span> (expires_in &lt; now) &#123;</span><br><span class="line">				access_token = getFromServer(tokenFile, wxprop, now, WxConstant.ACCESS_TOKEN);</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				access_token = wxprop.getProperty(WxConstant.ACCESS_TOKEN);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			access_token = getFromServer(tokenFile, wxprop, now, WxConstant.ACCESS_TOKEN);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> access_token;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getJsApiTicket</span><span class="params">()</span> <span class="keyword">throws</span> WeixinException </span>&#123;</span><br><span class="line">	String jsApiTicket = <span class="string">""</span>;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		Resource tokenFile = properties.getTokenFile();</span><br><span class="line">		Properties wxprop = PropertiesLoaderUtils.loadProperties(tokenFile);</span><br><span class="line">		String expires = wxprop.getProperty(WxConstant.EXPIRE_TIME);</span><br><span class="line">		<span class="keyword">long</span> now = Calendar.getInstance().getTimeInMillis() / <span class="number">1000</span>;</span><br><span class="line">		<span class="keyword">if</span> (expires != <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">long</span> expire_time = Long.parseLong(wxprop.getProperty(WxConstant.EXPIRE_TIME));</span><br><span class="line">			<span class="keyword">if</span> (expire_time &lt; now) &#123;</span><br><span class="line">				jsApiTicket = getFromServer(tokenFile, wxprop, now, WxConstant.JSAPI_TICKET);</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				jsApiTicket = wxprop.getProperty(WxConstant.JSAPI_TICKET);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			jsApiTicket = getFromServer(tokenFile, wxprop, now, WxConstant.JSAPI_TICKET);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> jsApiTicket;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="参考文档">参考文档</h2><ul>
+<li><a href="http://qydev.weixin.qq.com/wiki/index.php?title=%E5%BE%AE%E4%BF%A1JS-SDK%E6%8E%A5%E5%8F%A3" target="_blank" rel="external">微信JS-SDK说明文档</a></li>
+<li><a href="http://qydev.weixin.qq.com/wiki/index.php?title=%E4%B8%BB%E5%8A%A8%E8%B0%83%E7%94%A8" target="_blank" rel="external">主动调用</a></li>
 </ul>
   
 	</div>
@@ -114,9 +118,14 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/web/">web</a>
+  <a class="article-category-link" href="/categories/微信/">微信</a>
 </div>
 
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/access-token/">access_token</a><a href="/tags/jsapi-ticket/">jsapi_ticket</a>
+  </div>
 
 </div>
 
@@ -124,7 +133,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://chiva-zhao.github.io/2015/10/22/responsive-web-design/" data-title="响应式web设计笔记(1) | Love Life, Love coding" data-tsina="undefined" class="share clearfix">
+	  <div data-url="http://chiva-zhao.github.io/2015/10/26/weixin-cache-token/" data-title="企业公众号全局缓存access_token和jsapi_ticket | Love Life, Love coding" data-tsina="undefined" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -138,18 +147,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/10/23/weixin-verify/" title="企业公众号回调URL及密钥的配置">
+ <a href="/2015/10/26/html5-viewport/" title="响应式web设计笔记(2) viewport">
   <strong>上一篇：</strong><br/>
   <span>
-  企业公众号回调URL及密钥的配置</span>
+  响应式web设计笔记(2) viewport</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2015/10/21/fancybox/"  title="我的阅历">
+<a href="/2015/10/23/weixin-verify/"  title="企业公众号回调URL及密钥的配置">
  <strong>下一篇：</strong><br/> 
- <span>我的阅历
+ <span>企业公众号回调URL及密钥的配置
 </span>
 </a>
 </div>
@@ -158,7 +167,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/10/22/responsive-web-design/" data-title="响应式web设计笔记(1)" data-url="http://chiva-zhao.github.io/2015/10/22/responsive-web-design/"></div>
+	<div class="ds-thread" data-thread-key="2015/10/26/weixin-cache-token/" data-title="企业公众号全局缓存access_token和jsapi_ticket" data-url="http://chiva-zhao.github.io/2015/10/26/weixin-cache-token/"></div>
 </section>
 
 
@@ -168,7 +177,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是响应式设计"><span class="toc-number">1.</span> <span class="toc-text">什么是响应式设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#响应式设计的历史"><span class="toc-number">2.</span> <span class="toc-text">响应式设计的历史</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设计原则"><span class="toc-number">3.</span> <span class="toc-text">设计原则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现响应式布局的一些方法"><span class="toc-number">4.</span> <span class="toc-text">实现响应式布局的一些方法</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#说明"><span class="toc-number">1.</span> <span class="toc-text">说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#主动调用的频率限制"><span class="toc-number">1.1.</span> <span class="toc-text">主动调用的频率限制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jsapi_ticket"><span class="toc-number">1.2.</span> <span class="toc-text">jsapi_ticket</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缓存方案"><span class="toc-number">2.</span> <span class="toc-text">缓存方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文档"><span class="toc-number">3.</span> <span class="toc-text">参考文档</span></a></li></ol>
  
   </div>
 
