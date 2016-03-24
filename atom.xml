@@ -4,7 +4,7 @@
   <subtitle><![CDATA[码农，程序猿，未来的昏析师]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://chiva-zhao.github.io/"/>
-  <updated>2015-11-11T14:26:46.128Z</updated>
+  <updated>2016-03-24T15:24:16.118Z</updated>
   <id>http://chiva-zhao.github.io/</id>
   
   <author>
@@ -13,6 +13,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[奇妙的参数方程图像]]></title>
+    <link href="http://chiva-zhao.github.io/2016/03/24/wonderful-mathematics/"/>
+    <id>http://chiva-zhao.github.io/2016/03/24/wonderful-mathematics/</id>
+    <published>2016-03-24T14:55:54.000Z</published>
+    <updated>2016-03-24T15:24:16.118Z</updated>
+    <content type="html"><![CDATA[<p>几个参数方程生成的有意思的图像<br><a id="more"></a></p>
+<h2 id="方程1">方程1</h2><p> x=t+sin5t<br> y=t+sin6t<br> 图像：<br> <img src="http://7xs94i.com1.z0.glb.clouddn.com/1.png" alt="方程1"></p>
+<h2 id="方程2">方程2</h2><p> x=sin9t<br> y=sin10t<br> 图像：<br> <img src="http://7xs94i.com1.z0.glb.clouddn.com/2.png" alt="方程1"></p>
+<h2 id="方程3">方程3</h2><p> x=2.3cos10t+cos23t<br> y=2.3sin10t-sin23t<br> 图像：<br> <img src="http://7xs94i.com1.z0.glb.clouddn.com/3.png" alt="方程1"></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>几个参数方程生成的有意思的图像<br>]]>
+    
+    </summary>
+    
+      <category term="mathematics" scheme="http://chiva-zhao.github.io/tags/mathematics/"/>
+    
+      <category term="数学" scheme="http://chiva-zhao.github.io/categories/%E6%95%B0%E5%AD%A6/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[通过微信公众号上传及下载媒体文件]]></title>

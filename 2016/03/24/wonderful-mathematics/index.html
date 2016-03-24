@@ -4,23 +4,26 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>响应式web设计笔记(3) 页面如何加载渲染 | Love Life, Love coding</title>
+    <title>奇妙的参数方程图像 | Love Life, Love coding</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Chiva Zhao">
     
 
     
-    <meta name="description" content="简要说明html5中页面是如何加载渲染的">
+    <meta name="description" content="几个参数方程生成的有意思的图像">
 <meta property="og:type" content="article">
-<meta property="og:title" content="响应式web设计笔记(3) 页面如何加载渲染">
-<meta property="og:url" content="http://chiva-zhao.github.io/2015/10/29/html5-how-pages-loaded/index.html">
+<meta property="og:title" content="奇妙的参数方程图像">
+<meta property="og:url" content="http://chiva-zhao.github.io/2016/03/24/wonderful-mathematics/index.html">
 <meta property="og:site_name" content="Love Life, Love coding">
-<meta property="og:description" content="简要说明html5中页面是如何加载渲染的">
-<meta property="og:updated_time" content="2015-10-29T07:33:06.000Z">
+<meta property="og:description" content="几个参数方程生成的有意思的图像">
+<meta property="og:image" content="http://7xs94i.com1.z0.glb.clouddn.com/1.png">
+<meta property="og:image" content="http://7xs94i.com1.z0.glb.clouddn.com/2.png">
+<meta property="og:image" content="http://7xs94i.com1.z0.glb.clouddn.com/3.png">
+<meta property="og:updated_time" content="2016-03-24T15:24:16.118Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="响应式web设计笔记(3) 页面如何加载渲染">
-<meta name="twitter:description" content="简要说明html5中页面是如何加载渲染的">
+<meta name="twitter:title" content="奇妙的参数方程图像">
+<meta name="twitter:description" content="几个参数方程生成的有意思的图像">
 <meta name="twitter:creator" content="@59205240">
 
     
@@ -80,36 +83,23 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/10/29/html5-how-pages-loaded/" title="响应式web设计笔记(3) 页面如何加载渲染" itemprop="url">响应式web设计笔记(3) 页面如何加载渲染</a>
+      <a href="/2016/03/24/wonderful-mathematics/" title="奇妙的参数方程图像" itemprop="url">奇妙的参数方程图像</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Chiva Zhao" target="_blank" itemprop="author">Chiva Zhao</a>
 		
   <p class="article-time">
-    <time datetime="2015-10-29T06:26:59.000Z" itemprop="datePublished"> 发表于 2015-10-29</time>
+    <time datetime="2016-03-24T14:55:54.000Z" itemprop="datePublished"> 发表于 2016-03-24</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
-		<p>简要说明html5中页面是如何加载渲染的<br><a id="more"></a></p>
-<h2 id="网络延时">网络延时</h2><p>当你在浏览器栏敲入url回车或者点击一个链接的时候，你的终端（笔记本，台式机或者手机）会连接到因特网上，不管你的网络商是移动，联通电信还是宽带通……台式机还好一些，因为你一打开电脑就能上网，但如果你手机上网，那就需要连接一个离你最近的蜂窝站，告诉它你需要上网，理想情况下，如果这个蜂窝站连的人不多，你上网还比较顺畅，但在大城市中，同时打开手机上网的人总是非常多（看看地铁上的低头族就知道了），那么这个蜂窝站总是很忙，那就只能悲催的排队等候了，这样上网就会很慢，延时很大。<strong>4G网络要比3G快很多</strong></p>
-<h2 id="DNS请求">DNS请求</h2><p>一旦建立连接，浏览器会发送一个请求到<code>DNS（Domain Name System）</code>,负责将URL转换为实际的IP地址，这样浏览器就知道去哪里查找主机对应的网站</p>
-<h2 id="重定向">重定向</h2><p>有时候DNS会在告诉你IP之前，有可能会将请求重定向为新的url，举个栗子：你请求www.badu.com的时候，DNS有可能为你重定向为另外的一个www.cadu.com。这涉及到性能，因为任何的重定向会增加加载过程的时间。重定向不仅会发生在不同domain之间，也可能发生在同一站点的子域名。更复杂的情况有可能会有多重重定向来定位实际的站点。这会增加页面加载时间。</p>
-<h2 id="HTTP请求">HTTP请求</h2><p>一旦浏览器找到服务器的IP地址，就会向服务器发送http请求，也会在请求头增加一些关键属性。栗如<code>user agent</code>，来告诉服务器请求者的操作系统以及浏览器。如果服务器知道请求来自于移动端，它可能会发送一个mobile版本的页面而不是常规的desktop的页面。栗如m.jd.com.</p>
-<h2 id="发送HTML文件">发送HTML文件</h2><p>服务器收到http请求之后，会发送一个响应，通常是html页面以及携带的响应头。响应头包含额外的信息。栗如是否允许浏览器缓存资源，以及缓存多长时间</p>
-<h2 id="解压">解压</h2><p>客户端发送请求的时候就要告诉服务器浏览器可以接受什么格式的压缩文件(栗如gzip)。这样，服务器传送给client的html，<code>css</code>以及<code>js</code>文件会用gzip压缩，这样客户端的下载会更快，一旦接受到这些文件，浏览器会立马解压。</p>
-<h2 id="DOM">DOM</h2><p>接下来浏览器会解析html文档，创建文档对象模型（DOM），最后DOM代表了要显示的整个页面。然而如果你的<code>js</code>脚本事件改变的页面的内容，那么改变将会作用到DOM而不是html。</p>
-<h2 id="渲染head">渲染<strong>head</strong></h2><p>一旦DOM准备好之后，浏览器就会开始渲染HTML文档，每次一个元素，首先是<code>head</code>元素</p>
-<h3 id="外部资源">外部资源</h3><p>如果有<code>css</code>或者<code>javascript</code>文件，它会加载文件</p>
-<h3 id="并行加载">并行加载</h3><p>每个外部的文件连接（<code>css</code>或<code>js</code>）都需要一个单独的http请求，现在浏览器可以同时加载多个资源文件，但这个并行是有限制的。若浏览器缓存了资源（图片，<code>js</code>，<code>css</code>等），就不必要从服务器再请求了，具体的缓存策略看服务器的规定。</p>
-<h3 id="单线程执行">单线程执行</h3><p><code>js</code>脚本是单线程执行的，意味着浏览器同时只能执行一个文件。按照脚本在页面放置的先后顺序，包括以script标签的内联文件和外部资源文件，此时用户可能看到空白页，因为此时页面还没渲染，用户看不到任何东西。所以尽可能将<code>js</code>放置在页面底部，以加快页面渲染速度，给用户更好的体验。</p>
-<h2 id="渲染body">渲染<strong>body</strong></h2><p>接下来渲染<code>body</code>，浏览器会至上而下渲染每个元素，这时会需要<code>css</code>样式来计算每个元素的大小位置颜色等性质。</p>
-<h3 id="加载HTML_图像">加载HTML 图像</h3><p>浏览器碰到<code>img</code>元素时，会首先加载图像文件，对大文件会花比较长的时间加载，如果指定了高度和宽度，在没加载完成前，用户看到的是一个白框。响应式设计中没必要指定宽高，因为图像有可能不同，尺寸依赖于viewport的宽度而定。</p>
-<h3 id="加载背景图">加载背景图</h3><p>浏览器在<code>css</code>中碰到背景图时，会从url加载对应的图片</p>
-<h3 id="javascript">javascript</h3><p>在<code>body</code>中碰到<code>javascript</code>时，浏览器的渲染会暂停，以执行脚本。脚本执行完之后接着渲染</p>
-<h2 id="onload事件">onload事件</h2><p>在所有的页面元素加载和渲染完成之后，document会执行onload的<code>javascript</code>函数，onload意味着只要页面一完成加载就会被触发。</p>
+		<p>几个参数方程生成的有意思的图像<br><a id="more"></a></p>
+<h2 id="方程1">方程1</h2><p> x=t+sin5t<br> y=t+sin6t<br> 图像：<br> <img src="http://7xs94i.com1.z0.glb.clouddn.com/1.png" alt="方程1"></p>
+<h2 id="方程2">方程2</h2><p> x=sin9t<br> y=sin10t<br> 图像：<br> <img src="http://7xs94i.com1.z0.glb.clouddn.com/2.png" alt="方程1"></p>
+<h2 id="方程3">方程3</h2><p> x=2.3cos10t+cos23t<br> y=2.3sin10t-sin23t<br> 图像：<br> <img src="http://7xs94i.com1.z0.glb.clouddn.com/3.png" alt="方程1"></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -117,13 +107,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/html5/">html5</a>
+  <a class="article-category-link" href="/categories/数学/">数学</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Loaded/">Loaded</a><a href="/tags/html5/">html5</a>
+  <span></span> <a href="/tags/mathematics/">mathematics</a>
   </div>
 
 </div>
@@ -132,7 +122,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://chiva-zhao.github.io/2015/10/29/html5-how-pages-loaded/" data-title="响应式web设计笔记(3) 页面如何加载渲染 | Love Life, Love coding" data-tsina="undefined" class="share clearfix">
+	  <div data-url="http://chiva-zhao.github.io/2016/03/24/wonderful-mathematics/" data-title="奇妙的参数方程图像 | Love Life, Love coding" data-tsina="undefined" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -145,19 +135,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/11/11/weixin-upload/" title="通过微信公众号上传及下载媒体文件">
-  <strong>上一篇：</strong><br/>
-  <span>
-  通过微信公众号上传及下载媒体文件</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/10/27/weixin-js-signature/"  title="微信JS接口签名的生成">
+<a href="/2015/11/11/weixin-upload/"  title="通过微信公众号上传及下载媒体文件">
  <strong>下一篇：</strong><br/> 
- <span>微信JS接口签名的生成
+ <span>通过微信公众号上传及下载媒体文件
 </span>
 </a>
 </div>
@@ -166,7 +148,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/10/29/html5-how-pages-loaded/" data-title="响应式web设计笔记(3) 页面如何加载渲染" data-url="http://chiva-zhao.github.io/2015/10/29/html5-how-pages-loaded/"></div>
+	<div class="ds-thread" data-thread-key="2016/03/24/wonderful-mathematics/" data-title="奇妙的参数方程图像" data-url="http://chiva-zhao.github.io/2016/03/24/wonderful-mathematics/"></div>
 </section>
 
 
@@ -176,7 +158,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#网络延时"><span class="toc-number">1.</span> <span class="toc-text">网络延时</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS请求"><span class="toc-number">2.</span> <span class="toc-text">DNS请求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重定向"><span class="toc-number">3.</span> <span class="toc-text">重定向</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP请求"><span class="toc-number">4.</span> <span class="toc-text">HTTP请求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发送HTML文件"><span class="toc-number">5.</span> <span class="toc-text">发送HTML文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解压"><span class="toc-number">6.</span> <span class="toc-text">解压</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DOM"><span class="toc-number">7.</span> <span class="toc-text">DOM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#渲染head"><span class="toc-number">8.</span> <span class="toc-text">渲染head</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#外部资源"><span class="toc-number">8.1.</span> <span class="toc-text">外部资源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#并行加载"><span class="toc-number">8.2.</span> <span class="toc-text">并行加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#单线程执行"><span class="toc-number">8.3.</span> <span class="toc-text">单线程执行</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#渲染body"><span class="toc-number">9.</span> <span class="toc-text">渲染body</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#加载HTML_图像"><span class="toc-number">9.1.</span> <span class="toc-text">加载HTML 图像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#加载背景图"><span class="toc-number">9.2.</span> <span class="toc-text">加载背景图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#javascript"><span class="toc-number">9.3.</span> <span class="toc-text">javascript</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#onload事件"><span class="toc-number">10.</span> <span class="toc-text">onload事件</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#方程1"><span class="toc-number">1.</span> <span class="toc-text">方程1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方程2"><span class="toc-number">2.</span> <span class="toc-text">方程2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方程3"><span class="toc-number">3.</span> <span class="toc-text">方程3</span></a></li></ol>
  
   </div>
 
