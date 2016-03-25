@@ -4,23 +4,29 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>通过微信公众号上传及下载媒体文件 | Love Life, Love coding</title>
+    <title>利用微信web开发者工具进行本地和移动调试 | Love Life, Love coding</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Chiva Zhao">
     
 
     
-    <meta name="description" content="在企业公众号中上传媒体文件">
+    <meta name="description" content="介绍利用微信web开发者工具进行本地和移动调试">
 <meta property="og:type" content="article">
-<meta property="og:title" content="通过微信公众号上传及下载媒体文件">
-<meta property="og:url" content="http://chiva-zhao.github.io/2015/11/11/weixin-upload/index.html">
+<meta property="og:title" content="利用微信web开发者工具进行本地和移动调试">
+<meta property="og:url" content="http://chiva-zhao.github.io/2016/03/25/weixin-local-remote-debug/index.html">
 <meta property="og:site_name" content="Love Life, Love coding">
-<meta property="og:description" content="在企业公众号中上传媒体文件">
-<meta property="og:updated_time" content="2015-11-11T14:26:46.000Z">
+<meta property="og:description" content="介绍利用微信web开发者工具进行本地和移动调试">
+<meta property="og:image" content="http://7xs94i.com1.z0.glb.clouddn.com/wx-debug-local.png">
+<meta property="og:image" content="http://7xs94i.com1.z0.glb.clouddn.com/wx-debug-local1.png">
+<meta property="og:image" content="http://7xs94i.com1.z0.glb.clouddn.com/wx-debug-remote1.png">
+<meta property="og:image" content="http://7xs94i.com1.z0.glb.clouddn.com/wx-debug-remote2.jpg">
+<meta property="og:image" content="http://7xs94i.com1.z0.glb.clouddn.com/wx-debug-remote3.png">
+<meta property="og:image" content="http://7xs94i.com1.z0.glb.clouddn.com/wx-debug-remote4.jpg">
+<meta property="og:updated_time" content="2016-03-25T08:22:47.520Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="通过微信公众号上传及下载媒体文件">
-<meta name="twitter:description" content="在企业公众号中上传媒体文件">
+<meta name="twitter:title" content="利用微信web开发者工具进行本地和移动调试">
+<meta name="twitter:description" content="介绍利用微信web开发者工具进行本地和移动调试">
 <meta name="twitter:creator" content="@59205240">
 
     
@@ -80,34 +86,54 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/11/11/weixin-upload/" title="通过微信公众号上传及下载媒体文件" itemprop="url">通过微信公众号上传及下载媒体文件</a>
+      <a href="/2016/03/25/weixin-local-remote-debug/" title="利用微信web开发者工具进行本地和移动调试" itemprop="url">利用微信web开发者工具进行本地和移动调试</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Chiva Zhao" target="_blank" itemprop="author">Chiva Zhao</a>
 		
   <p class="article-time">
-    <time datetime="2015-11-11T14:05:54.000Z" itemprop="datePublished"> 发表于 2015-11-11</time>
+    <time datetime="2016-03-25T07:49:00.000Z" itemprop="datePublished"> 发表于 2016-03-25</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
-		<p>在企业公众号中上传媒体文件<br><a id="more"></a></p>
-<h2 id="说明">说明</h2><p>用于上传图片、语音、视频等媒体资源文件以及普通文件（如doc，ppt），接口返回媒体资源标识ID：<code>media_id</code>。请注意，<code>media_id</code>是可复用的，同一个<code>media_id</code>可用于消息的多次发送(3天内有效)。正常情况下</p>
-<h2 id="限制">限制</h2><p>上传的媒体文件限制</p>
+		<p>介绍利用微信web开发者工具进行本地和移动调试<br><a id="more"></a></p>
+<h2 id="概述">概述</h2><blockquote>
+<p>为帮助开发者更方便、更安全地开发和调试基于微信的网页，我们推出了 web 开发者工具。它是一个桌面应用，通过模拟微信客户端的表现，使得开发者可以使用这个工具方便地在 PC 或者 Mac 上进行开发和调试工作。立即下载体验</p>
+</blockquote>
+<p>你可以：</p>
 <ul>
-<li>所有文件size必须大于5个字节</li>
-<li>图片（image）:2MB，支持JPG,PNG格式</li>
-<li>语音（voice）：2MB，播放长度不超过60s，支持AMR格式</li>
-<li>视频（video）：10MB，支持MP4格式</li>
-<li>普通文件（file）：20MB</li>
+<li>使用自己的微信号来调试微信网页授权</li>
+<li>调试、检验页面的 JS-SDK 相关功能与权限，模拟大部分 SDK 的输入和输出</li>
+<li>使用基于 weinre 的移动调试功能</li>
+<li>利用集成的 Chrome DevTools 协助开发</li>
 </ul>
-<h2 id="返回代码示例">返回代码示例</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;"<span class="attribute">type</span>":<span class="value"><span class="string">"image"</span></span>,"<span class="attribute">media_id</span>":</span><br><span class="line"> <span class="value"><span class="string">"1infmXfNjpgZHRG9j9dOeWxzpUXF6ccOVZ6Qtz3gLFLvei1oLogZzSQKn8z4q3J8po-89vLfdqnUxJunWIeJtiw"</span></span><br><span class="line"></span>,"<span class="attribute">created_at</span>":<span class="value"><span class="number">1447222170</span></span>&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="主要代码实现">主要代码实现</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * [execPostFile 上传文件]</span><br><span class="line"> * <span class="doctag">@param</span>  &#123;[type]&#125; String url           [微信上传媒体文件url：https://qyapi.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&amp;type=TYPE]</span><br><span class="line"> * <span class="doctag">@param</span>  &#123;[type]&#125; File   tempFile      [本地文件]</span><br><span class="line"> * <span class="doctag">@return</span> &#123;[type]&#125;        [JSON对象]</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> JSONObject <span class="title">execPostFile</span><span class="params">(String url, File tempFile)</span> </span>&#123;</span><br><span class="line">    CloseableHttpClient httpclient = HttpClients.createDefault();</span><br><span class="line">    HttpPost httppost = <span class="keyword">new</span> HttpPost(url);</span><br><span class="line">    JSONObject jsonResult = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        MultipartEntityBuilder builder = MultipartEntityBuilder.create();</span><br><span class="line">        builder.addBinaryBody(<span class="string">"media"</span>, tempFile);</span><br><span class="line">        httppost.setEntity(builder.build());</span><br><span class="line">        HttpResponse result = httpclient.execute(httppost);</span><br><span class="line">        <span class="comment">/** 请求发送成功，并得到响应 **/</span></span><br><span class="line">        <span class="keyword">if</span> (result.getStatusLine().getStatusCode() == <span class="number">200</span>) &#123;</span><br><span class="line">            String str = <span class="string">""</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">/** 读取服务器返回过来的json字符串数据 **/</span></span><br><span class="line">                str = EntityUtils.toString(result.getEntity());</span><br><span class="line">                <span class="comment">/** 把json字符串转换成json对象 **/</span></span><br><span class="line">                jsonResult = JSONObject.fromObject(str);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                logger.error(<span class="string">"post请求提交失败:"</span> + url, e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> jsonResult;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * 获取临时素材文件</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">execGetFile</span><span class="params">(String url)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    CloseableHttpClient client = HttpClients.createDefault();</span><br><span class="line">    HttpGet get = <span class="keyword">new</span> HttpGet(url);</span><br><span class="line">    File result = <span class="keyword">null</span>;</span><br><span class="line">    String filename = <span class="string">""</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        result = client.execute(get, fileHandler);</span><br><span class="line">        filename = result.getName();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> e;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> filename;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="参考文档">参考文档</h2><ul>
-<li><a href="http://qydev.weixin.qq.com/wiki/index.php?title=%E4%B8%8A%E4%BC%A0%E4%B8%B4%E6%97%B6%E7%B4%A0%E6%9D%90%E6%96%87%E4%BB%B6" target="_blank" rel="external">上传临时素材文件</a></li>
-<li><a href="http://qydev.weixin.qq.com/wiki/index.php?title=%E8%8E%B7%E5%8F%96%E4%B8%B4%E6%97%B6%E7%B4%A0%E6%9D%90%E6%96%87%E4%BB%B6" target="_blank" rel="external">获取临时素材文件</a></li>
+<h2 id="本地调试">本地调试</h2><p>跟使用chrome调试起来是一样的<br><img src="http://7xs94i.com1.z0.glb.clouddn.com/wx-debug-local.png" alt="本地调试"><br><img src="http://7xs94i.com1.z0.glb.clouddn.com/wx-debug-local1.png" alt="设置IOS或android版本"></p>
+<h2 id="移动调试">移动调试</h2><blockquote>
+<p>移动调试功能是基于 weinre 的，并且做了一些改进，相比直接使用 weinre 有两个优点：</p>
+</blockquote>
+<ol>
+<li>无须手工在页面中加入 weinre 调试脚本</li>
+<li>可以在 weinre 的网络请求页卡中，看到完整的 http 请求 log，非局限于 ajax 请求</li>
+</ol>
+<p>由于移动端微信浏览器的兼容性问题，有的问题在本地重现不了，即使是用微信专用调试器也不行，这时就只能在手机端借助本工具提供的功能进行移动端的调试。</p>
+<h3 id="打开移动调试页签">打开移动调试页签</h3><p><img src="http://7xs94i.com1.z0.glb.clouddn.com/wx-debug-remote1.png" alt=""></p>
+<h3 id="手机上设置代理">手机上设置代理</h3><p><img src="http://7xs94i.com1.z0.glb.clouddn.com/wx-debug-remote2.jpg" alt=""></p>
+<blockquote>
+<p>手机上设置代理</p>
+</blockquote>
+<h3 id="打开调试窗口">打开调试窗口</h3><p><img src="http://7xs94i.com1.z0.glb.clouddn.com/wx-debug-remote3.png" alt=""></p>
+<blockquote>
+<p>打开调试窗口</p>
+</blockquote>
+<h3 id="选择有问题的html元素进行调试">选择有问题的html元素进行调试</h3><p><img src="http://7xs94i.com1.z0.glb.clouddn.com/wx-debug-remote4.jpg" alt=""></p>
+<blockquote>
+<p>选择元素进行调试</p>
+</blockquote>
+<h2 id="参考资料">参考资料</h2><ul>
+<li><a href="http://mp.weixin.qq.com/wiki/10/e5f772f4521da17fa0d7304f68b97d7e.html" target="_blank" rel="external">微信web开发者工具</a></li>
 </ul>
   
 	</div>
@@ -122,7 +148,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/upload/">upload</a><a href="/tags/weixin/">weixin</a>
+  <span></span> <a href="/tags/wechat/">wechat</a>
   </div>
 
 </div>
@@ -131,7 +157,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://chiva-zhao.github.io/2015/11/11/weixin-upload/" data-title="通过微信公众号上传及下载媒体文件 | Love Life, Love coding" data-tsina="undefined" class="share clearfix">
+	  <div data-url="http://chiva-zhao.github.io/2016/03/25/weixin-local-remote-debug/" data-title="利用微信web开发者工具进行本地和移动调试 | Love Life, Love coding" data-tsina="undefined" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -144,19 +170,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/03/24/wonderful-mathematics/" title="奇妙的参数方程图像">
-  <strong>上一篇：</strong><br/>
-  <span>
-  奇妙的参数方程图像</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/10/29/html5-how-pages-loaded/"  title="响应式web设计笔记(3) 页面如何加载渲染">
+<a href="/2016/03/24/wonderful-mathematics/"  title="奇妙的参数方程图像">
  <strong>下一篇：</strong><br/> 
- <span>响应式web设计笔记(3) 页面如何加载渲染
+ <span>奇妙的参数方程图像
 </span>
 </a>
 </div>
@@ -165,7 +183,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/11/11/weixin-upload/" data-title="通过微信公众号上传及下载媒体文件" data-url="http://chiva-zhao.github.io/2015/11/11/weixin-upload/"></div>
+	<div class="ds-thread" data-thread-key="2016/03/25/weixin-local-remote-debug/" data-title="利用微信web开发者工具进行本地和移动调试" data-url="http://chiva-zhao.github.io/2016/03/25/weixin-local-remote-debug/"></div>
 </section>
 
 
@@ -175,7 +193,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#说明"><span class="toc-number">1.</span> <span class="toc-text">说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#限制"><span class="toc-number">2.</span> <span class="toc-text">限制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#返回代码示例"><span class="toc-number">3.</span> <span class="toc-text">返回代码示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主要代码实现"><span class="toc-number">4.</span> <span class="toc-text">主要代码实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文档"><span class="toc-number">5.</span> <span class="toc-text">参考文档</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#本地调试"><span class="toc-number">2.</span> <span class="toc-text">本地调试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#移动调试"><span class="toc-number">3.</span> <span class="toc-text">移动调试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#打开移动调试页签"><span class="toc-number">3.1.</span> <span class="toc-text">打开移动调试页签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#手机上设置代理"><span class="toc-number">3.2.</span> <span class="toc-text">手机上设置代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#打开调试窗口"><span class="toc-number">3.3.</span> <span class="toc-text">打开调试窗口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#选择有问题的html元素进行调试"><span class="toc-number">3.4.</span> <span class="toc-text">选择有问题的html元素进行调试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-number">4.</span> <span class="toc-text">参考资料</span></a></li></ol>
  
   </div>
 

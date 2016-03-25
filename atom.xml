@@ -4,7 +4,7 @@
   <subtitle><![CDATA[码农，程序猿，未来的昏析师]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://chiva-zhao.github.io/"/>
-  <updated>2016-03-24T15:35:50.000Z</updated>
+  <updated>2016-03-25T08:22:47.520Z</updated>
   <id>http://chiva-zhao.github.io/</id>
   
   <author>
@@ -13,6 +13,60 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[利用微信web开发者工具进行本地和移动调试]]></title>
+    <link href="http://chiva-zhao.github.io/2016/03/25/weixin-local-remote-debug/"/>
+    <id>http://chiva-zhao.github.io/2016/03/25/weixin-local-remote-debug/</id>
+    <published>2016-03-25T07:49:00.000Z</published>
+    <updated>2016-03-25T08:22:47.520Z</updated>
+    <content type="html"><![CDATA[<p>介绍利用微信web开发者工具进行本地和移动调试<br><a id="more"></a></p>
+<h2 id="概述">概述</h2><blockquote>
+<p>为帮助开发者更方便、更安全地开发和调试基于微信的网页，我们推出了 web 开发者工具。它是一个桌面应用，通过模拟微信客户端的表现，使得开发者可以使用这个工具方便地在 PC 或者 Mac 上进行开发和调试工作。立即下载体验</p>
+</blockquote>
+<p>你可以：</p>
+<ul>
+<li>使用自己的微信号来调试微信网页授权</li>
+<li>调试、检验页面的 JS-SDK 相关功能与权限，模拟大部分 SDK 的输入和输出</li>
+<li>使用基于 weinre 的移动调试功能</li>
+<li>利用集成的 Chrome DevTools 协助开发</li>
+</ul>
+<h2 id="本地调试">本地调试</h2><p>跟使用chrome调试起来是一样的<br><img src="http://7xs94i.com1.z0.glb.clouddn.com/wx-debug-local.png" alt="本地调试"><br><img src="http://7xs94i.com1.z0.glb.clouddn.com/wx-debug-local1.png" alt="设置IOS或android版本"></p>
+<h2 id="移动调试">移动调试</h2><blockquote>
+<p>移动调试功能是基于 weinre 的，并且做了一些改进，相比直接使用 weinre 有两个优点：</p>
+</blockquote>
+<ol>
+<li>无须手工在页面中加入 weinre 调试脚本</li>
+<li>可以在 weinre 的网络请求页卡中，看到完整的 http 请求 log，非局限于 ajax 请求</li>
+</ol>
+<p>由于移动端微信浏览器的兼容性问题，有的问题在本地重现不了，即使是用微信专用调试器也不行，这时就只能在手机端借助本工具提供的功能进行移动端的调试。</p>
+<h3 id="打开移动调试页签">打开移动调试页签</h3><p><img src="http://7xs94i.com1.z0.glb.clouddn.com/wx-debug-remote1.png" alt=""></p>
+<h3 id="手机上设置代理">手机上设置代理</h3><p><img src="http://7xs94i.com1.z0.glb.clouddn.com/wx-debug-remote2.jpg" alt=""></p>
+<blockquote>
+<p>手机上设置代理</p>
+</blockquote>
+<h3 id="打开调试窗口">打开调试窗口</h3><p><img src="http://7xs94i.com1.z0.glb.clouddn.com/wx-debug-remote3.png" alt=""></p>
+<blockquote>
+<p>打开调试窗口</p>
+</blockquote>
+<h3 id="选择有问题的html元素进行调试">选择有问题的html元素进行调试</h3><p><img src="http://7xs94i.com1.z0.glb.clouddn.com/wx-debug-remote4.jpg" alt=""></p>
+<blockquote>
+<p>选择元素进行调试</p>
+</blockquote>
+<h2 id="参考资料">参考资料</h2><ul>
+<li><a href="http://mp.weixin.qq.com/wiki/10/e5f772f4521da17fa0d7304f68b97d7e.html" target="_blank" rel="external">微信web开发者工具</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>介绍利用微信web开发者工具进行本地和移动调试<br>]]>
+    
+    </summary>
+    
+      <category term="wechat" scheme="http://chiva-zhao.github.io/tags/wechat/"/>
+    
+      <category term="微信" scheme="http://chiva-zhao.github.io/categories/%E5%BE%AE%E4%BF%A1/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[奇妙的参数方程图像]]></title>
